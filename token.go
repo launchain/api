@@ -21,11 +21,12 @@ func (t *Token) Generate(userID, deviceID string) (map[string]string, error) {
 	data["user_id"] = []string{userID}
 	data["device_id"] = []string{deviceID}
 
-	res, err := postForm(t.uri, data)
+	url := t.uri + "/v1/tokens"
+	out := make(map[string]string)
+	err := postForm(url, data, &out)
 	if err != nil {
 		return nil, err
 	}
 
-	m, _ := res.(map[string]string)
-	return m, nil
+	return out, nil
 }
