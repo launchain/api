@@ -2,8 +2,6 @@ package api
 
 import (
 	"net/url"
-
-	"gitlab.com/launchain/session/config"
 )
 
 // Token ...
@@ -11,17 +9,10 @@ type Token struct {
 	uri string
 }
 
-var t *Token
-
-func init() {
-	conf := config.NewConfig()
-	uri := "http://" + conf.Token.Host + ":" + conf.Token.Port
-	t = &Token{uri: uri}
-}
-
 // NewToken ...
-func NewToken() *Token {
-	return t
+func NewToken(c *Config) *Token {
+	uri := "http://" + c.Host + ":" + c.Port
+	return &Token{uri: uri}
 }
 
 // Generate ...
