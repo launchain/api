@@ -1,7 +1,9 @@
-package api
+package v1
 
 import (
 	"net/url"
+
+	"github.com/launchain/api"
 )
 
 // Token ...
@@ -23,7 +25,7 @@ func (t *Token) Generate(userID, deviceID string) (map[string]string, error) {
 
 	url := t.uri + "/v1/tokens"
 	out := make(map[string]string)
-	err := postForm(url, data, &out)
+	err := api.postForm(url, data, &out)
 	if err != nil {
 		return nil, err
 	}

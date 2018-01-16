@@ -15,7 +15,8 @@ type MyError struct {
 	Message string `json:"message"`
 }
 
-func postForm(url string, data url.Values, out interface{}) error {
+// PostForm ...
+func PostForm(url string, data url.Values, out interface{}) error {
 	resp, err := http.PostForm(url, data)
 	if err != nil {
 		return err
