@@ -75,7 +75,7 @@ func parseResp(resp *http.Response, out interface{}) error {
 		return nil
 	case 201, 202, 204:
 		return nil
-	case 401, 404, 500:
+	case 400, 401, 404, 500:
 		b, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			return err
