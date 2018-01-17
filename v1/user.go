@@ -12,8 +12,8 @@ type User struct {
 	uri string
 }
 
-// UserRequest ...
-type UserRequest struct {
+// UserResponse ...
+type UserResponse struct {
 	ID             string    `json:"_id"`
 	Authentication int       `json:"authentication"`
 	CreatedAt      time.Time `json:"created_at"`
@@ -28,13 +28,13 @@ func NewUser(c *api.Config) *User {
 }
 
 // CheckPassword ...
-func (u *User) CheckPassword(phone, password string) (*UserRequest, error) {
+func (u *User) CheckPassword(phone, password string) (*UserResponse, error) {
 	data := make(url.Values)
 	data["phone"] = []string{phone}
 	data["password"] = []string{password}
 
 	url := u.uri + "/v1/ps"
-	out := &UserRequest{}
+	out := &UserResponse{}
 	err := api.PostForm(url, data, out)
 	if err != nil {
 		return nil, err
