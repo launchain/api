@@ -30,6 +30,32 @@ func PostForm(url string, data url.Values, out interface{}) error {
 	return parseResp(resp, out)
 }
 
+// Delete ...
+func Delete(url string) error {
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return err
+	}
+
+	c := &http.Client{}
+	resp, err := c.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+
+	resp.Request.Close = true
+
+	if resp.StatusCode == 204 {
+		return nil
+	}
+
+	return fmt.Errorf("未知错误[%d]", resp.StatusCode)
+}
+
 func parseResp(resp *http.Response, out interface{}) error {
 	switch resp.StatusCode {
 	case 200:

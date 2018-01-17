@@ -12,7 +12,7 @@ type Token struct {
 }
 
 // NewToken ...
-func NewToken(c *Config) *Token {
+func NewToken(c *api.Config) *Token {
 	uri := "http://" + c.Host + ":" + c.Port
 	return &Token{uri: uri}
 }
@@ -25,10 +25,16 @@ func (t *Token) Generate(userID, deviceID string) (map[string]string, error) {
 
 	url := t.uri + "/v1/tokens"
 	out := make(map[string]string)
-	err := api.postForm(url, data, &out)
+	err := api.PostForm(url, data, &out)
 	if err != nil {
 		return nil, err
 	}
 
 	return out, nil
+}
+
+// Remove ...
+func (t *Token) Remove(token string) error {
+	url := t.uri + "/v1/tokens/" + token
+	return api.Delete(url)
 }
