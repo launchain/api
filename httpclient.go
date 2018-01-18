@@ -15,6 +15,21 @@ type MyError struct {
 	Message string `json:"message"`
 }
 
+// Get ...
+func Get(url string, out interface{}) error {
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+
+	resp.Request.Close = true
+	return parseResp(resp, out)
+}
+
 // PostForm ...
 func PostForm(url string, data url.Values, out interface{}) error {
 	resp, err := http.PostForm(url, data)
