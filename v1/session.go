@@ -33,9 +33,10 @@ func NewSession(c *api.Config) *Session {
 }
 
 // SignIn ...
-func (s *Session) SignIn(phone, deviceID string, platform int) (*SessionResponse, error) {
+func (s *Session) SignIn(phone, password, deviceID string, platform int) (*SessionResponse, error) {
 	data := make(url.Values)
 	data["phone"] = []string{phone}
+	data["password"] = []string{password}
 	data["device_id"] = []string{deviceID}
 	data["platform"] = []string{fmt.Sprintf("%d", platform)}
 
