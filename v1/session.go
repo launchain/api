@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"net/url"
 	"time"
 
@@ -32,11 +33,11 @@ func NewSession(c *api.Config) *Session {
 }
 
 // SignIn ...
-func (s *Session) SignIn(phone, deviceID, platform string) (*SessionResponse, error) {
+func (s *Session) SignIn(phone, deviceID string, platform int) (*SessionResponse, error) {
 	data := make(url.Values)
 	data["phone"] = []string{phone}
 	data["device_id"] = []string{deviceID}
-	data["platform"] = []string{platform}
+	data["platform"] = []string{fmt.Sprintf("%d", platform)}
 
 	url := s.uri + "/v1/sessions"
 	out := &SessionResponse{}
@@ -46,5 +47,4 @@ func (s *Session) SignIn(phone, deviceID, platform string) (*SessionResponse, er
 	}
 
 	return out, nil
-
 }
