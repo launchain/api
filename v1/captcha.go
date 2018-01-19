@@ -28,3 +28,13 @@ func (c *Captcha) FindOne(id, code string) error {
 	url := fmt.Sprintf("%s/v1/captcha/%s/code/%s", c.uri, id, code)
 	return api.Get(url, nil)
 }
+
+// Remove ...
+func (c *Captcha) Remove(id string) error {
+	if id == "" {
+		return errors.New("参数错误")
+	}
+
+	url := c.uri + "/v1/captcha/" + id
+	return api.Delete(url)
+}

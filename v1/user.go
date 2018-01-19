@@ -43,3 +43,19 @@ func (u *User) CheckPassword(phone, password string) (*UserResponse, error) {
 
 	return out, nil
 }
+
+// Create ...
+func (u *User) Create(phone, password string) (*UserResponse, error) {
+	data := make(url.Values)
+	data["phone"] = []string{phone}
+	data["password"] = []string{password}
+
+	url := u.uri + "/v1/users"
+	out := &UserResponse{}
+	err := api.PostForm(url, data, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
