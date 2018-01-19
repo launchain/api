@@ -23,6 +23,7 @@ type UserResponse struct {
 
 // NewUser ...
 func NewUser(c *api.Config) *User {
+	c.Check()
 	uri := "http://" + c.Host + ":" + c.Port
 	return &User{uri: uri}
 }

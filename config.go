@@ -13,3 +13,9 @@ func DefaultConfig() *Config {
 		Port: "8888",
 	}
 }
+
+// Check ...
+func (c *Config) Check() bool {
+	// TODO
+	return true
+}
