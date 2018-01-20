@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 // MyError ...
@@ -45,6 +46,27 @@ func PostForm(url string, data url.Values, out interface{}) error {
 	return parseResp(resp, out)
 }
 
+// Patch ...
+func Patch(url string, data url.Values, out interface{}) error {
+	req, err := http.NewRequest("PATCH", url, strings.NewReader(data.Encode()))
+	if err != nil {
+		return err
+	}
+
+	c := &http.Client{}
+	resp, err := c.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+		resp.Request.Close = true
+	}
+
+	return parseResp(resp, out)
+}
+
 // Delete ...
 func Delete(url string) error {
 	req, err := http.NewRequest("DELETE", url, nil)
@@ -72,6 +94,10 @@ func Delete(url string) error {
 }
 
 func parseResp(resp *http.Response, out interface{}) error {
+	if resp == nil {
+		return errors.New("resp is nil")
+	}
+
 	switch resp.StatusCode {
 	case 200:
 		if out == nil {
