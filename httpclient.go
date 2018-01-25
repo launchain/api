@@ -128,7 +128,7 @@ func parseResp(resp *http.Response, out interface{}) error {
 			return err
 		}
 
-		return errors.New(e.Message)
+		return errors.New(e.Code)
 	default:
 		return fmt.Errorf("不支持的状态码[%d]", resp.StatusCode)
 	}
