@@ -12,7 +12,7 @@ import (
 
 // MyError ...
 type MyError struct {
-	Code    int    `json:"code"`
+	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
