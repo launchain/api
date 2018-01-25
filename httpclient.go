@@ -53,6 +53,8 @@ func Patch(url string, data url.Values, out interface{}) error {
 		return err
 	}
 
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
 	c := &http.Client{}
 	resp, err := c.Do(req)
 	if err != nil {
