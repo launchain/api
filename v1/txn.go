@@ -21,29 +21,29 @@ func NewTXN(c *api.Config) *TXN {
 
 // TXNCreateRequest ...
 type TXNCreateRequest struct {
-	Address  string
-	From     string
-	To       string
-	Value    string
-	Gas      string
-	GasPrice string
+	Hash     string `json:"hash"`
+	From     string `json:"from"`
+	To       string `json:"to"`
+	Value    string `json:"value"`
+	Gas      string `json:"gas"`
+	GasPrice string `json:"gasPrice"`
 }
 
 // Create ...
-func (t *TXN) Create(req *TXNCreateRequest) (map[string]string, error) {
-	if req.From == "" || req.To == "" {
+func (t *TXN) Create(req *TXNCreateRequest) (map[string]interface{}, error) {
+	if req.Hash == "" || req.From == "" || req.To == "" {
 		return nil, errors.New("参数错误")
 	}
 
 	data := make(url.Values)
-	data["address"] = []string{req.Address}
+	data["hash"] = []string{req.Hash}
 	data["from"] = []string{req.From}
 	data["to"] = []string{req.To}
 	data["value"] = []string{req.Value}
 	data["gas"] = []string{req.Gas}
 	data["gas_price"] = []string{req.GasPrice}
 	url := t.uri + "/v1/txn"
-	out := make(map[string]string)
+	out := make(map[string]interface{})
 	err := api.PostForm(url, data, &out)
 	if err != nil {
 		return nil, err
