@@ -3,6 +3,7 @@ package v1
 import (
 	"errors"
 	"net/url"
+	"time"
 
 	"github.com/launchain/api"
 )
@@ -21,18 +22,23 @@ func NewTXN(c *api.Config) *TXN {
 
 // TXNCreateRequest ...
 type TXNCreateRequest struct {
-	Hash     string `json:"hash"`
-	From     string `json:"from"`
-	To       string `json:"to"`
-	Value    string `json:"value"`
-	Gas      string `json:"gas"`
-	GasPrice string `json:"gasPrice"`
+	Hash      string    `json:"hash"`
+	From      string    `json:"from"`
+	To        string    `json:"to"`
+	Value     string    `json:"value"`
+	Gas       string    `json:"gas"`
+	GasPrice  string    `json:"gasPrice"`
+	Timestamp time.Time `json:"timestamp"`
 }
 
 // Create ...
 func (t *TXN) Create(req *TXNCreateRequest) (map[string]interface{}, error) {
 	if req.Hash == "" || req.From == "" || req.To == "" {
 		return nil, errors.New("参数错误")
+	}
+
+	if req.Timestamp.IsZero() {
+		req.Timestamp = time.Now().UTC()
 	}
 
 	data := make(url.Values)
