@@ -48,6 +48,7 @@ func (t *TXN) Create(req *TXNCreateRequest) (map[string]interface{}, error) {
 	data["value"] = []string{req.Value}
 	data["gas"] = []string{req.Gas}
 	data["gas_price"] = []string{req.GasPrice}
+	data["timestamp"] = []string{req.Timestamp.Format(time.RFC3339)}
 	url := t.uri + "/v1/txn"
 	out := make(map[string]interface{})
 	err := api.PostForm(url, data, &out)
