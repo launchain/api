@@ -17,6 +17,7 @@ type User struct {
 // UserRequest ...
 type UserRequest struct {
 	Password       string
+	Email          string
 	Authentication int
 }
 
@@ -24,9 +25,16 @@ type UserRequest struct {
 type UserResponse struct {
 	ID             string    `json:"_id"`
 	Authentication int       `json:"authentication"`
+	Email          string    `json:"email"`
 	CreatedAt      time.Time `json:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at"`
 	Phone          string    `json:"phone"`
+}
+
+// FindResponse ...
+type FindResponse struct {
+	Users []*UserResponse `json:"users"`
+	Count int             `json:"count"`
 }
 
 // NewUser ...
@@ -34,6 +42,18 @@ func NewUser(c *api.Config) *User {
 	c.Check()
 	uri := "http://" + c.Host + ":" + c.Port
 	return &User{uri: uri}
+}
+
+// Find ...
+func (u *User) Find(ur *UserRequest) (*FindResponse, error) {
+	url := u.uri + "/v1/users"
+	out := &FindResponse{}
+	err := api.Get(url, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
 }
 
 // CheckPassword ...
