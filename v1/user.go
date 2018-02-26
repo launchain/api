@@ -31,12 +31,6 @@ type UserResponse struct {
 	Phone          string    `json:"phone"`
 }
 
-// FindResponse ...
-type FindResponse struct {
-	Users []*UserResponse `json:"users"`
-	Count int             `json:"count"`
-}
-
 // NewUser ...
 func NewUser(c *api.Config) *User {
 	c.Check()
@@ -44,10 +38,38 @@ func NewUser(c *api.Config) *User {
 	return &User{uri: uri}
 }
 
+// UserFindRequest ...
+type UserFindRequest struct {
+	Page  int
+	Limit int
+	Auth  int
+	Email string
+}
+
+// UserFindResponse ...
+type UserFindResponse struct {
+	Users []*UserResponse `json:"users"`
+	Count int             `json:"count"`
+}
+
 // Find ...
-func (u *User) Find(ur *UserRequest) (*FindResponse, error) {
-	url := u.uri + "/v1/users"
-	out := &FindResponse{}
+func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
+	url := u.uri + "/v1/users?"
+
+	if fr.Email != "" {
+		url += "email=" + fr.Email + "&"
+	}
+	if fr.Auth != 0 {
+		url += fmt.Sprintf("auth=%d&", fr.Auth)
+	}
+	if fr.Page != 0 {
+		url += fmt.Sprintf("page=%d&", fr.Page)
+	}
+	if fr.Limit != 0 {
+		url += fmt.Sprintf("limit=%d&", fr.Limit)
+	}
+
+	out := &UserFindResponse{}
 	err := api.Get(url, out)
 	if err != nil {
 		return nil, err
@@ -113,7 +135,7 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data := make(url.Values)
 	data["password"] = []string{user.Password}
 	data["authentication"] = []string{fmt.Sprintf("%d", user.Authentication)}
-
+	data["email"] = []string{user.Email}
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
