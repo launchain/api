@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/launchain/api"
 )
@@ -20,14 +21,31 @@ func NewSMS(c *api.Config) *SMS {
 	return &SMS{uri: uri}
 }
 
+// SMSCode ...
+type SMSCode struct {
+	ID        string    `json:"_id"`
+	Status    int       `json:"status"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Phone     string    `json:"phone"`
+	Type      int       `json:"type"`
+	Code      string    `json:"code"`
+	ExpiredAt time.Time `json:"expired_at"`
+}
+
 // FindCode ...
-func (s *SMS) FindCode(phone, code string) error {
+func (s *SMS) FindCode(phone, code string) (*SMSCode, error) {
 	if phone == "" || code == "" {
-		return errors.New("参数错误")
+		return nil, errors.New("参数错误")
 	}
 
+	sc := &SMSCode{}
 	url := fmt.Sprintf("%s/v1/sms/%s/code/%s", s.uri, phone, code)
-	return api.Get(url, nil)
+	err := api.Get(url, sc)
+	if err != nil {
+		return nil, err
+	}
+	return sc, nil
 }
 
 // NewWarning ...
