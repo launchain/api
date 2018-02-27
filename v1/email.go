@@ -28,7 +28,7 @@ type Code struct {
 // NewEmail ..
 func NewEmail(c *api.Config) *Email {
 	c.Check()
-	uri := "http://" + c.Host + ":" + c.Port
+	uri := c.URI()
 	return &Email{uri: uri}
 }
 

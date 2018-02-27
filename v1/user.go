@@ -34,7 +34,7 @@ type UserResponse struct {
 // NewUser ...
 func NewUser(c *api.Config) *User {
 	c.Check()
-	uri := "http://" + c.Host + ":" + c.Port
+	uri := c.URI()
 	return &User{uri: uri}
 }
 

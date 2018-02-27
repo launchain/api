@@ -16,7 +16,7 @@ type TXN struct {
 // NewTXN ..
 func NewTXN(c *api.Config) *TXN {
 	c.Check()
-	uri := "http://" + c.Host + ":" + c.Port
+	uri := c.URI()
 	return &TXN{uri: uri}
 }
 

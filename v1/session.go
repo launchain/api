@@ -28,7 +28,7 @@ type SessionResponse struct {
 // NewSession ...
 func NewSession(c *api.Config) *Session {
 	c.Check()
-	uri := "http://" + c.Host + ":" + c.Port
+	uri := c.URI()
 	return &Session{uri: uri}
 }
 

@@ -17,7 +17,7 @@ type SMS struct {
 // NewSMS ..
 func NewSMS(c *api.Config) *SMS {
 	c.Check()
-	uri := "http://" + c.Host + ":" + c.Port
+	uri := c.URI()
 	return &SMS{uri: uri}
 }
 

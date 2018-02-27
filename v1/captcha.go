@@ -15,7 +15,7 @@ type Captcha struct {
 // NewCaptcha ...
 func NewCaptcha(c *api.Config) *Captcha {
 	c.Check()
-	uri := "http://" + c.Host + ":" + c.Port
+	uri := c.URI()
 	return &Captcha{uri: uri}
 }
 

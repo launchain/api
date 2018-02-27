@@ -32,7 +32,7 @@ type PartnerResponse struct {
 // NewPartner ...
 func NewPartner(c *api.Config) *Partner {
 	c.Check()
-	uri := "http://" + c.Host + ":" + c.Port
+	uri := c.URI()
 	return &Partner{uri: uri}
 }
 

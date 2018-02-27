@@ -14,7 +14,7 @@ type Token struct {
 // NewToken ...
 func NewToken(c *api.Config) *Token {
 	c.Check()
-	uri := "http://" + c.Host + ":" + c.Port
+	uri := c.URI()
 	return &Token{uri: uri}
 }
 
