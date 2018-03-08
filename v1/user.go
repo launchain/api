@@ -44,6 +44,7 @@ type UserFindRequest struct {
 	Limit int
 	Auth  int
 	Email string
+	Phone string
 }
 
 // UserFindResponse ...
@@ -67,6 +68,9 @@ func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 	}
 	if fr.Limit != 0 {
 		url += fmt.Sprintf("limit=%d&", fr.Limit)
+	}
+	if fr.Phone != "" {
+		url += fmt.Sprintf("phone=%s&", fr.Phone)
 	}
 
 	out := &UserFindResponse{}
