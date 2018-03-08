@@ -57,7 +57,7 @@ type UserFindResponse struct {
 func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 	//	url := u.uri + "/v1/users?"
 
-	var data url.Values
+	data := make(url.Values)
 	if fr.Email != "" {
 		data.Add("email", fr.Email)
 	}
