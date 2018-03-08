@@ -55,26 +55,27 @@ type UserFindResponse struct {
 
 // Find ...
 func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
-	url := u.uri + "/v1/users?"
+	//	url := u.uri + "/v1/users?"
 
+	var data url.Values
 	if fr.Email != "" {
-		url += "email=" + fr.Email + "&"
+		data.Add("email", fr.Email)
 	}
 	if fr.Auth != 0 {
-		url += fmt.Sprintf("auth=%d&", fr.Auth)
+		data.Add("auth", fmt.Sprintf("%d", fr.Auth))
 	}
 	if fr.Page != 0 {
-		url += fmt.Sprintf("page=%d&", fr.Page)
+		data.Add("page", fmt.Sprintf("%d", fr.Page))
 	}
 	if fr.Limit != 0 {
-		url += fmt.Sprintf("limit=%d&", fr.Limit)
+		data.Add("limit", fmt.Sprintf("%d", fr.Limit))
 	}
 	if fr.Phone != "" {
-		url += fmt.Sprintf("phone=%s&", fr.Phone)
+		data.Add("phone", fr.Phone)
 	}
 
 	out := &UserFindResponse{}
-	err := api.Get(url, out)
+	err := api.Get(u.uri+"/v1/users?"+data.Encode(), out)
 	if err != nil {
 		return nil, err
 	}
