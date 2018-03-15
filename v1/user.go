@@ -19,6 +19,9 @@ type UserRequest struct {
 	Password       string
 	Email          string
 	Authentication int
+	IDCard         string
+	RealName       string
+	Portrait       string
 }
 
 // UserResponse ...
@@ -29,6 +32,8 @@ type UserResponse struct {
 	CreatedAt      time.Time `json:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at"`
 	Phone          string    `json:"phone"`
+	RealName       string    `json:"realname"`
+	IDCard         string    `json:"idcard"`
 }
 
 // NewUser ...
@@ -138,9 +143,29 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	}
 
 	data := make(url.Values)
-	data["password"] = []string{user.Password}
-	data["authentication"] = []string{fmt.Sprintf("%d", user.Authentication)}
-	data["email"] = []string{user.Email}
+	data.Add("password", user.Password)
+	data.Add("authentication", fmt.Sprintf("%d", user.Authentication))
+	data.Add("email", user.Email)
+	data.Add("idcard", user.IDCard)
+	data.Add("realname", user.RealName)
+	data.Add("portrait", user.Portrait)
+
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
+}
+
+// SensitiveData ...
+func (u *User) SensitiveData(id string) (*UserResponse, error) {
+	if id == "" {
+		return nil, errors.New("id不能为空")
+	}
+
+	url := fmt.Sprintf("%s/v1/users/%s/sensitivedata", u.uri, id)
+	out := &UserResponse{}
+	err := api.Get(url, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
 }
