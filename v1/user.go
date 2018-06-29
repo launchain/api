@@ -22,6 +22,7 @@ type UserRequest struct {
 	IDCard         string
 	RealName       string
 	Portrait       string
+	Residence      string
 }
 
 // UserResponse ...
@@ -34,6 +35,7 @@ type UserResponse struct {
 	Phone          string    `json:"phone"`
 	RealName       string    `json:"realname"`
 	IDCard         string    `json:"idcard"`
+	Residence      string    `json:"residence"`
 }
 
 // NewUser ...
@@ -149,7 +151,7 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("idcard", user.IDCard)
 	data.Add("realname", user.RealName)
 	data.Add("portrait", user.Portrait)
-
+	data.Add("residence", user.Residence)
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
