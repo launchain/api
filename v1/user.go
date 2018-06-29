@@ -23,6 +23,8 @@ type UserRequest struct {
 	RealName       string
 	Portrait       string
 	Residence      string
+	Degree         string
+	Career         string
 }
 
 // UserResponse ...
@@ -36,6 +38,8 @@ type UserResponse struct {
 	RealName       string    `json:"realname"`
 	IDCard         string    `json:"idcard"`
 	Residence      string    `json:"residence"`
+	Degree         string    `json:"degree"`
+	Career         string    `json:"career"`
 }
 
 // NewUser ...
@@ -152,6 +156,8 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("realname", user.RealName)
 	data.Add("portrait", user.Portrait)
 	data.Add("residence", user.Residence)
+	data.Add("degree", user.Degree)
+	data.Add("career", user.Career)
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
