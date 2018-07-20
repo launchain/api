@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"bytes"
 )
 
 // MyError ...
@@ -94,6 +95,29 @@ func Delete(url string) error {
 
 	return fmt.Errorf("未知错误[%d]", resp.StatusCode)
 }
+
+
+// PostJson ...
+func PostJson(url, params string, out interface{}) error {
+	client := http.Client{}
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(params)))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+	resp.Request.Close = true
+
+	return parseResp(resp, out)
+}
+
 
 func parseResp(resp *http.Response, out interface{}) error {
 	if resp == nil {
