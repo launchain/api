@@ -25,6 +25,7 @@ type UserRequest struct {
 	Residence      string
 	Degree         string
 	Career         string
+	Phone          string
 	CarInfo        string
 	DriverLicense  string
 	Alipay         string
@@ -164,6 +165,10 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("residence", user.Residence)
 	data.Add("degree", user.Degree)
 	data.Add("career", user.Career)
+	data.Add("carinfo", user.CarInfo)
+	data.Add("alipay", user.Alipay)
+	data.Add("dirverlicense", user.DriverLicense)
+	data.Add("phone", user.Phone)
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
