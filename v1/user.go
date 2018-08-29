@@ -25,6 +25,9 @@ type UserRequest struct {
 	Residence      string
 	Degree         string
 	Career         string
+	CarInfo        string
+	DriverLicense  string
+	Alipay         string
 }
 
 // UserResponse ...
@@ -40,6 +43,9 @@ type UserResponse struct {
 	Residence      string    `json:"residence"`
 	Degree         string    `json:"degree"`
 	Career         string    `json:"career"`
+	CarInfo        string    `json:"carinfo"`
+	DriverLicense  string    `json:"dirverlicense"`
+	Alipay         string    `json:"alipay"`
 }
 
 // NewUser ...
