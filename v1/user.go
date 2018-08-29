@@ -29,7 +29,8 @@ type UserRequest struct {
 	CarInfo        string
 	DriverLicense  string
 	Alipay         string
-	Role           string
+	RoleName       string
+	RoleImg        string
 }
 
 // UserResponse ...
@@ -48,7 +49,8 @@ type UserResponse struct {
 	CarInfo        string    `json:"carinfo"`
 	DriverLicense  string    `json:"dirverlicense"`
 	Alipay         string    `json:"alipay"`
-	Role           string    `json:"role"`
+	RoleName       string    `json:"rolename"`
+	RoleImg        string    `json:"roleimg"`
 }
 
 // NewUser ...
