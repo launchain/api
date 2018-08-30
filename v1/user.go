@@ -31,6 +31,7 @@ type UserRequest struct {
 	Alipay         string
 	RoleName       string
 	RoleImg        string
+	WalletAddress  string
 }
 
 // UserResponse ...
@@ -51,6 +52,7 @@ type UserResponse struct {
 	Alipay         string    `json:"alipay"`
 	RoleName       string    `json:"rolename"`
 	RoleImg        string    `json:"roleimg"`
+	WalletAddress  string    `json:"wallet_address"`
 }
 
 // NewUser ...
