@@ -64,11 +64,12 @@ func NewUser(c *api.Config) *User {
 
 // UserFindRequest ...
 type UserFindRequest struct {
-	Page  int
-	Limit int
-	Auth  int
-	Email string
-	Phone string
+	Page          int
+	Limit         int
+	Auth          int
+	Email         string
+	Phone         string
+	WalletAddress string
 }
 
 // UserFindResponse ...
@@ -97,7 +98,9 @@ func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 	if fr.Phone != "" {
 		data.Add("phone", fr.Phone)
 	}
-
+	if fr.WalletAddress != "" {
+		data.Add("wallet_address", fr.WalletAddress)
+	}
 	out := &UserFindResponse{}
 	err := api.Get(u.uri+"/v1/users?"+data.Encode(), out)
 	if err != nil {
