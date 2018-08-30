@@ -179,6 +179,9 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("dirverlicense", user.DriverLicense)
 	data.Add(""+
 		"", user.Phone)
+	data.Add("wallet_address", user.WalletAddress)
+	data.Add("rolename", user.RoleName)
+	data.Add("roleimg", user.RoleImg)
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
