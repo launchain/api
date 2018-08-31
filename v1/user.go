@@ -48,7 +48,7 @@ type UserResponse struct {
 	Degree         string    `json:"degree"`
 	Career         string    `json:"career"`
 	CarInfo        string    `json:"carinfo"`
-	DriverLicense  string    `json:"dirverlicense"`
+	DriverLicense  string    `json:"driverlicense"`
 	Alipay         string    `json:"alipay"`
 	RoleName       string    `json:"rolename"`
 	RoleImg        string    `json:"roleimg"`
@@ -176,7 +176,7 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("career", user.Career)
 	data.Add("carinfo", user.CarInfo)
 	data.Add("alipay", user.Alipay)
-	data.Add("dirverlicense", user.DriverLicense)
+	data.Add("driverlicense", user.DriverLicense)
 	data.Add(""+
 		"", user.Phone)
 	data.Add("wallet_address", user.WalletAddress)
