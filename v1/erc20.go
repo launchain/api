@@ -19,6 +19,15 @@ type REC20Request struct {
 	Value   string
 }
 
+// ERC20Response ...
+type ERC20Response struct {
+	ID      string `json:"id"`
+	Name    string `json:"name"`
+	Symbol  string `json:"symbol"`
+	Total   string `json:"total"`
+	Address string `json:"address"`
+}
+
 // NewERC20 ...
 func NewERC20(c *api.Config) *ERC20 {
 	c.Check()
@@ -45,6 +54,15 @@ func (u *ERC20) Balance(tokenID, address string) (map[string]string, error) {
 	apiurl := u.uri + "/v1/token/" + tokenID + "?address=" + address
 	out := make(map[string]string)
 	err := api.Get(apiurl, &out)
+
+	return out, err
+}
+
+// FindOne ...
+func (u *ERC20) FindOne(tokenID string) (*ERC20Response, error) {
+	apiurl := u.uri + "/v1/token/" + tokenID
+	out := &ERC20Response{}
+	err := api.Get(apiurl, out)
 
 	return out, err
 }
