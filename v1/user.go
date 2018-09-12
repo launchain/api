@@ -182,6 +182,7 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("wallet_address", user.WalletAddress)
 	data.Add("rolename", user.RoleName)
 	data.Add("roleimg", user.RoleImg)
+	data.Add("phone", user.Phone)
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
