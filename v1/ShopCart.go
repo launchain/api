@@ -1,7 +1,7 @@
 package v1
 
 import (
-	"github.com/launchain/exchange-api"
+	"github.com/launchain/api"
 	"time"
 )
 

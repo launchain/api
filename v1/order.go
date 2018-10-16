@@ -2,7 +2,7 @@ package v1
 
 import (
 	"fmt"
-	"github.com/launchain/exchange-api"
+	"github.com/launchain/api"
 	"time"
 )
 
@@ -25,6 +25,8 @@ type OrderResponse struct {
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 	Remark      string    `json:"remark"`
+	Apikey      string    `json:"apikey"`
+	AssetId     string    `json:"assetid"`
 }
 
 // GetOneOrder ...

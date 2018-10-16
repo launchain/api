@@ -150,6 +150,21 @@ func (u *User) Create(phone, password string) (*UserResponse, error) {
 	return out, nil
 }
 
+// AutoCreate ...
+func (u *User) AutoCreate(phone string) (*UserResponse, error) {
+	data := make(url.Values)
+	data["phone"] = []string{phone}
+
+	url := u.uri + "/v1/users/phone"
+	out := &UserResponse{}
+	err := api.PostForm(url, data, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
+
 // FindID ...
 func (u *User) FindID(id string) (*UserResponse, error) {
 	if id == "" {
