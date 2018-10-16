@@ -16,33 +16,51 @@ type User struct {
 
 // UserRequest ...
 type UserRequest struct {
-	Password       string
-	Phone          string
-	Email          string
-	Authentication int
-	IDCard         string
-	RealName       string
-	Portrait       string
-	WalletAddress  string
-	Residence      string
-	Degree         string
-	Career         string
+
+	Password            string
+	Email               string
+	Authentication      int
+	IDCard              string
+	RealName            string
+	Portrait            string
+	Residence           string
+	Degree              string
+	Career              string
+	Phone               string
+	CarInfo             string
+	DriverLicense       string
+	Alipay              string
+	RoleName            string
+	RoleImg             string
+	WalletAddress       string
+	CarInfoStatus       int
+	RoleStatus          int
+	DriverLicenseStatus int
 }
 
 // UserResponse ...
 type UserResponse struct {
-	ID             string    `json:"_id"`
-	Authentication int       `json:"authentication"`
-	Email          string    `json:"email"`
-	CreatedAt      time.Time `json:"created_at"`
-	UpdatedAt      time.Time `json:"updated_at"`
-	Phone          string    `json:"phone"`
-	RealName       string    `json:"realname"`
-	IDCard         string    `json:"idcard"`
-	WalletAddress  string    `json:"wallet_address"`
-	Residence      string    `json:"residence"`
-	Degree         string    `json:"degree"`
-	Career         string    `json:"career"`
+
+	ID                  string    `json:"_id"`
+	Authentication      int       `json:"authentication"`
+	Email               string    `json:"email"`
+	CreatedAt           time.Time `json:"created_at"`
+	UpdatedAt           time.Time `json:"updated_at"`
+	Phone               string    `json:"phone"`
+	RealName            string    `json:"realname"`
+	IDCard              string    `json:"idcard"`
+	Residence           string    `json:"residence"`
+	Degree              string    `json:"degree"`
+	Career              string    `json:"career"`
+	CarInfo             string    `json:"carinfo"`
+	DriverLicense       string    `json:"driverlicense"`
+	Alipay              string    `json:"alipay"`
+	RoleName            string    `json:"rolename"`
+	RoleImg             string    `json:"roleimg"`
+	WalletAddress       string    `json:"wallet_address"`
+	CarInfoStatus       int       `json:"carinfo_status"`
+	RoleStatus          int       `json:"role_status"`
+	DriverLicenseStatus int       `json:"driverlicense_status"`
 }
 
 // NewUser ...
@@ -54,11 +72,12 @@ func NewUser(c *api.Config) *User {
 
 // UserFindRequest ...
 type UserFindRequest struct {
-	Page  int
-	Limit int
-	Auth  int
-	Email string
-	Phone string
+	Page          int
+	Limit         int
+	Auth          int
+	Email         string
+	Phone         string
+	WalletAddress string
 }
 
 // UserFindResponse ...
@@ -87,7 +106,9 @@ func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 	if fr.Phone != "" {
 		data.Add("phone", fr.Phone)
 	}
-
+	if fr.WalletAddress != "" {
+		data.Add("wallet_address", fr.WalletAddress)
+	}
 	out := &UserFindResponse{}
 	err := api.Get(u.uri+"/v1/users?"+data.Encode(), out)
 	if err != nil {
@@ -163,6 +184,16 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("degree", user.Degree)
 	data.Add("career", user.Career)
 	data.Add("wallet_address", user.WalletAddress)
+	data.Add("carinfo", user.CarInfo)
+	data.Add("alipay", user.Alipay)
+	data.Add("driverlicense", user.DriverLicense)
+	data.Add("wallet_address", user.WalletAddress)
+	data.Add("rolename", user.RoleName)
+	data.Add("roleimg", user.RoleImg)
+	data.Add("phone", user.Phone)
+	data.Add("driverlicense_status", fmt.Sprintf("%d", user.DriverLicenseStatus))
+	data.Add("carinfo_status", fmt.Sprintf("%d", user.CarInfoStatus))
+	data.Add("role_status", fmt.Sprintf("%d", user.RoleStatus))
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
