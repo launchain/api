@@ -17,11 +17,13 @@ type User struct {
 // UserRequest ...
 type UserRequest struct {
 	Password       string
+	Phone          string
 	Email          string
 	Authentication int
 	IDCard         string
 	RealName       string
 	Portrait       string
+	WalletAddress  string
 	Residence      string
 	Degree         string
 	Career         string
@@ -37,6 +39,7 @@ type UserResponse struct {
 	Phone          string    `json:"phone"`
 	RealName       string    `json:"realname"`
 	IDCard         string    `json:"idcard"`
+	WalletAddress  string    `json:"wallet_address"`
 	Residence      string    `json:"residence"`
 	Degree         string    `json:"degree"`
 	Career         string    `json:"career"`
@@ -151,6 +154,7 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data := make(url.Values)
 	data.Add("password", user.Password)
 	data.Add("authentication", fmt.Sprintf("%d", user.Authentication))
+	data.Add("phone", user.Phone)
 	data.Add("email", user.Email)
 	data.Add("idcard", user.IDCard)
 	data.Add("realname", user.RealName)
@@ -158,6 +162,7 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("residence", user.Residence)
 	data.Add("degree", user.Degree)
 	data.Add("career", user.Career)
+	data.Add("wallet_address", user.WalletAddress)
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
