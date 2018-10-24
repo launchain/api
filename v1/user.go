@@ -86,7 +86,7 @@ type UserFindRequest struct {
 }
 
 //UserCreatRequest ...
-type UserCreatRequest struct {
+type UserCreateRequest struct {
 	Phone    string
 	PassWord string
 	Platform int
@@ -130,7 +130,7 @@ func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 		data.Add("wallet_address", fr.WalletAddress)
 	}
 	if fr.OpenId != "" {
-		data.Add("unionid", fr.OpenId)
+		data.Add("openid", fr.OpenId)
 	}
 	out := &UserFindResponse{}
 	err := api.Get(u.uri+"/v1/users?"+data.Encode(), out)
@@ -158,7 +158,7 @@ func (u *User) CheckPassword(phone, password string) (*UserResponse, error) {
 }
 
 // Create ...
-func (u *User) Create(user UserCreatRequest) (*UserResponse, error) {
+func (u *User) Create(user UserCreateRequest) (*UserResponse, error) {
 	data := make(url.Values)
 	data["phone"] = []string{user.Phone}
 	data["password"] = []string{user.PassWord}
@@ -175,7 +175,7 @@ func (u *User) Create(user UserCreatRequest) (*UserResponse, error) {
 }
 
 // AutoCreate ...
-func (u *User) AutoCreate(user UserCreatRequest) (*UserResponse, error) {
+func (u *User) AutoCreate(user UserCreateRequest) (*UserResponse, error) {
 	data := make(url.Values)
 	data["phone"] = []string{user.Phone}
 	if user.UnionId != "" && user.OpenId != "" && user.RefreshToken != "" {
