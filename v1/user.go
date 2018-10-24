@@ -16,7 +16,6 @@ type User struct {
 
 // UserRequest ...
 type UserRequest struct {
-
 	Password            string
 	Email               string
 	Authentication      int
@@ -36,11 +35,13 @@ type UserRequest struct {
 	CarInfoStatus       int
 	RoleStatus          int
 	DriverLicenseStatus int
+	RefreshToken        string
+	UnionId             string
+	OpenId              string
 }
 
 // UserResponse ...
 type UserResponse struct {
-
 	ID                  string    `json:"_id"`
 	Authentication      int       `json:"authentication"`
 	Email               string    `json:"email"`
@@ -61,6 +62,9 @@ type UserResponse struct {
 	CarInfoStatus       int       `json:"carinfo_status"`
 	RoleStatus          int       `json:"role_status"`
 	DriverLicenseStatus int       `json:"driverlicense_status"`
+	RefreshToken        string    `json:"refresh_token"`
+	UnionId             string    `json:"unionid"`
+	OpenId              string    `json:"openid"`
 }
 
 // NewUser ...
@@ -78,6 +82,22 @@ type UserFindRequest struct {
 	Email         string
 	Phone         string
 	WalletAddress string
+	OpenId        string
+}
+
+//UserCreatRequest ...
+type UserCreatRequest struct {
+	Phone    string
+	PassWord string
+	Platform int
+	WechatInfo
+}
+
+//WechatInfo ...
+type WechatInfo struct {
+	UnionId      string
+	OpenId       string
+	RefreshToken string
 }
 
 // UserFindResponse ...
@@ -109,6 +129,9 @@ func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 	if fr.WalletAddress != "" {
 		data.Add("wallet_address", fr.WalletAddress)
 	}
+	if fr.OpenId != "" {
+		data.Add("unionid", fr.OpenId)
+	}
 	out := &UserFindResponse{}
 	err := api.Get(u.uri+"/v1/users?"+data.Encode(), out)
 	if err != nil {
@@ -135,10 +158,11 @@ func (u *User) CheckPassword(phone, password string) (*UserResponse, error) {
 }
 
 // Create ...
-func (u *User) Create(phone, password string) (*UserResponse, error) {
+func (u *User) Create(user UserCreatRequest) (*UserResponse, error) {
 	data := make(url.Values)
-	data["phone"] = []string{phone}
-	data["password"] = []string{password}
+	data["phone"] = []string{user.Phone}
+	data["password"] = []string{user.PassWord}
+	data["platform"] = []string{fmt.Sprintf("%d", user.Platform)}
 
 	url := u.uri + "/v1/users"
 	out := &UserResponse{}
@@ -151,10 +175,15 @@ func (u *User) Create(phone, password string) (*UserResponse, error) {
 }
 
 // AutoCreate ...
-func (u *User) AutoCreate(phone string) (*UserResponse, error) {
+func (u *User) AutoCreate(user UserCreatRequest) (*UserResponse, error) {
 	data := make(url.Values)
-	data["phone"] = []string{phone}
-
+	data["phone"] = []string{user.Phone}
+	if user.UnionId != "" && user.OpenId != "" && user.RefreshToken != "" {
+		data["unionid"] = []string{user.UnionId}
+		data["openid"] = []string{user.OpenId}
+		data["refresh_token"] = []string{user.RefreshToken}
+	}
+	data["platform"] = []string{fmt.Sprintf("%d", user.Platform)}
 	url := u.uri + "/v1/users/phone"
 	out := &UserResponse{}
 	err := api.PostForm(url, data, out)
@@ -209,6 +238,9 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("driverlicense_status", fmt.Sprintf("%d", user.DriverLicenseStatus))
 	data.Add("carinfo_status", fmt.Sprintf("%d", user.CarInfoStatus))
 	data.Add("role_status", fmt.Sprintf("%d", user.RoleStatus))
+	data.Add("unionid", user.UnionId)
+	data.Add("openid", user.OpenId)
+	data.Add("refresh_token", user.RefreshToken)
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
