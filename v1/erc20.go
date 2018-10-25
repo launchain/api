@@ -17,7 +17,7 @@ type ERC20Request struct {
 	TokenID string
 	To      string
 	Value   string
-}
+} 
 
 // ERC20Response ...
 type ERC20Response struct {
