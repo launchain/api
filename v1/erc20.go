@@ -11,8 +11,8 @@ type ERC20 struct {
 	uri string
 }
 
-// REC20Request ...
-type REC20Request struct {
+// ERC20Request ...
+type ERC20Request struct {
 	APIKey  string
 	TokenID string
 	To      string
@@ -36,7 +36,7 @@ func NewERC20(c *api.Config) *ERC20 {
 }
 
 // Transfer ...
-func (u *ERC20) Transfer(req REC20Request) (map[string]string, error) {
+func (u *ERC20) Transfer(req ERC20Request) (map[string]string, error) {
 	apiurl := u.uri + "/v1/token/transfer"
 	out := make(map[string]string)
 	data := make(url.Values)
