@@ -27,6 +27,7 @@ type PartnerResponse struct {
 	Address     string    `json:"address"`
 	PassPhrase  string    `json:"passphrase"`
 	Keystore    string    `json:"keystore"`
+	Aeskey      string    `json:"aeskey"`
 }
 
 // NewPartner ...
