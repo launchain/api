@@ -87,9 +87,10 @@ type UserFindRequest struct {
 
 //UserCreatRequest ...
 type UserCreateRequest struct {
-	Phone    string
-	PassWord string
-	Platform int
+	Phone         string
+	PassWord      string
+	Platform      int
+	WalletAddress string
 	WechatInfo
 }
 
@@ -182,6 +183,7 @@ func (u *User) AutoCreate(user UserCreateRequest) (*UserResponse, error) {
 		data["unionid"] = []string{user.UnionId}
 		data["openid"] = []string{user.OpenId}
 		data["refresh_token"] = []string{user.RefreshToken}
+		data["wallet_address"] = []string{user.WalletAddress}
 	}
 	data["platform"] = []string{fmt.Sprintf("%d", user.Platform)}
 	url := u.uri + "/v1/users/phone"
