@@ -33,6 +33,6 @@ func (u *UserKeystore) UserKeyStoreCreate(uk *UserKeyStoreCreateRequest) (map[st
 	data.Add("address", uk.Address)
 	data.Add("keystore", uk.KeyStore)
 	data.Add("filename", uk.FileName)
-	url := fmt.Sprintf("%s/v1/user/%s/keystore", u.uri, uk.UserID)
+	url := fmt.Sprintf("%s/v1/user/%s/keystore/upload", u.uri, uk.UserID)
 	return out, api.PostForm(url, data, &out)
 }
