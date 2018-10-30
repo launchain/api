@@ -17,6 +17,7 @@ type UserKeyStoreCreateRequest struct {
 	Address  string
 	KeyStore string
 	FileName string
+	AesKey   string
 }
 
 // NewUserKeyStore ...
