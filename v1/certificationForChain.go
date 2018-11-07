@@ -18,6 +18,13 @@ type CertificationRequest struct {
 	Address string
 }
 
+// NewCertification ...
+func NewCertification(c *api.Config) *User {
+	c.Check()
+	uri := c.URI()
+	return &User{uri: uri}
+}
+
 // CreateChain ...
 func (c *Certification) CreateChain(req *CertificationRequest) (map[string]interface{}, error) {
 	data := make(url.Values)
