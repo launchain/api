@@ -6,27 +6,27 @@ import (
 	"net/url"
 )
 
-// Certification ...
-type Certification struct {
+// CertificationForChain ...
+type CertificationForChain struct {
 	uri string
 }
 
 // CertificationRequest ..
-type CertificationRequest struct {
+type CertificationForChainRequest struct {
 	Name    string
 	Vin     string
 	Address string
 }
 
-// NewCertification ...
-func NewCertification(c *api.Config) *Certification {
+// NewCertificationForChain ...
+func NewCertificationForChain(c *api.Config) *CertificationForChain {
 	c.Check()
 	uri := c.URI()
-	return &Certification{uri: uri}
+	return &CertificationForChain{uri: uri}
 }
 
 // CreateChain ...
-func (c *Certification) CreateChain(req *CertificationRequest) (map[string]interface{}, error) {
+func (c *CertificationForChain) CreateChain(req *CertificationForChainRequest) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data.Add("name", req.Name)
 	data.Add("address", req.Address)
