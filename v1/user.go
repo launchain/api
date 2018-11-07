@@ -42,7 +42,7 @@ type UserRequest struct {
 
 // UserResponse ...
 type UserResponse struct {
-	ID                  string    `json:"_id"`
+	ID                  string    `json:"id"`
 	Authentication      int       `json:"authentication"`
 	Email               string    `json:"email"`
 	CreatedAt           time.Time `json:"created_at"`
