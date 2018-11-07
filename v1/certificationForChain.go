@@ -19,10 +19,10 @@ type CertificationRequest struct {
 }
 
 // NewCertification ...
-func NewCertification(c *api.Config) *User {
+func NewCertification(c *api.Config) *Certification {
 	c.Check()
 	uri := c.URI()
-	return &User{uri: uri}
+	return &Certification{uri: uri}
 }
 
 // CreateChain ...
