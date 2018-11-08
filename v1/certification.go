@@ -11,6 +11,14 @@ type Certification struct {
 	uri string
 }
 
+// CreateCertificationRequest ...
+type CreateCertificationRequest struct {
+	UserID        string
+	Name          string
+	WalletAddress string
+	Idcard        string
+}
+
 // NewCertification ...
 func NewCertification(c *api.Config) *Certification {
 	c.Check()
@@ -18,10 +26,13 @@ func NewCertification(c *api.Config) *Certification {
 	return &Certification{uri: uri}
 }
 
-// CreateChain ...
-func (c *Certification) CreateCertification(userId string) (map[string]interface{}, error) {
+// CreateCertification ...
+func (c *Certification) CreateCertification(req *CreateCertificationRequest) (map[string]interface{}, error) {
 	data := make(url.Values)
-	Url := fmt.Sprintf("%s/v1/identity/certification/%s", c.uri, userId)
+	data.Add("name", req.Name)
+	data.Add("wallet_address", req.WalletAddress)
+	data.Add("idcard", req.Idcard)
+	Url := fmt.Sprintf("%s/v1/identity/certification/%s", c.uri, req.UserID)
 	out := make(map[string]interface{})
 	return out, api.PostForm(Url, data, &out)
 }
