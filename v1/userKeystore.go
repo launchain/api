@@ -39,3 +39,10 @@ func (u *UserKeystore) UserKeyStoreCreate(uk *UserKeyStoreCreateRequest) (map[st
 	url := fmt.Sprintf("%s/v1/user/%s/keystore/upload", u.uri, uk.UserID)
 	return out, api.PostForm(url, data, &out)
 }
+
+//GetUserKeystore ...
+func (u *UserKeystore) GetUserKeystore(userId string) (map[string]interface{}, error) {
+	out := make(map[string]interface{})
+	url := fmt.Sprintf("%s/v1/user/%s/keystore/default", u.uri, userId)
+	return out, api.Get(url, &out)
+}
