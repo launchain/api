@@ -2,7 +2,7 @@ package v1
 
 import (
 	"net/url"
-
+	"fmt"
 	"github.com/launchain/api"
 )
 
@@ -60,7 +60,8 @@ func (u *ERC20) Transfer(req ERC20Request) (map[string]string, error) {
 
 // Balance ...
 func (u *ERC20) Balance(tokenID, address string) (map[string]string, error) {
-	apiurl := u.uri + "/v1/token/" + tokenID + "?address=" + address
+	apiurl := u.uri + "/v1/token/" + tokenID + "/balance" + "?address=" + address
+	fmt.Println("'url=", apiurl)
 	out := make(map[string]string)
 	err := api.Get(apiurl, &out)
 
