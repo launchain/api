@@ -27,6 +27,19 @@ func NewUserKeyStorer(c *api.Config) *UserKeystore {
 	return &UserKeystore{uri: uri}
 }
 
+//UserDefalutAddrResquest ...
+type UserDefalutAddrResquest struct {
+	Code    string
+	Message string
+	Data    UserDefalutAddr
+}
+
+//UserDefalutAddr ...
+type UserDefalutAddr struct {
+	UserID  string
+	Address string
+}
+
 // UserKeyStoreCreate ...
 func (u *UserKeystore) UserKeyStoreCreate(uk *UserKeyStoreCreateRequest) (map[string]interface{}, error) {
 	out := make(map[string]interface{})
@@ -38,4 +51,22 @@ func (u *UserKeystore) UserKeyStoreCreate(uk *UserKeyStoreCreateRequest) (map[st
 	data.Add("keystore", uk.KeyStore)
 	url := fmt.Sprintf("%s/v1/user/%s/keystore/upload", u.uri, uk.UserID)
 	return out, api.PostForm(url, data, &out)
+}
+
+//GetUserDefaultKeystore ...
+func (u *UserKeystore) GetUserDefaultKeystore(userId string) (map[string]interface{}, error) {
+	out := make(map[string]interface{})
+	url := fmt.Sprintf("%s/v1/user/%s/keystore/default", u.uri, userId)
+	return out, api.Get(url, &out)
+}
+
+//GetUserDefaultAddress ...
+func (u *UserKeystore) GetUserDefaultAddress(userId string) (*UserDefalutAddrResquest, error) {
+	out := &UserDefalutAddrResquest{}
+	url := fmt.Sprintf("%s/v1/user/%s/address/default", u.uri, userId)
+	err := api.Get(url, out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }

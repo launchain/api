@@ -2,7 +2,6 @@ package v1
 
 import (
 	"net/url"
-
 	"github.com/launchain/api"
 )
 
@@ -17,7 +16,7 @@ type ERC20Request struct {
 	TokenID string
 	To      string
 	Value   string
-} 
+}
 
 // ERC20Response ...
 type ERC20Response struct {
@@ -26,6 +25,15 @@ type ERC20Response struct {
 	Symbol  string `json:"symbol"`
 	Total   string `json:"total"`
 	Address string `json:"address"`
+}
+
+type ERC20PayRequest struct {
+	FromAddress  string `json:"from_address"`
+	ToAddress    string `json:"to_address"`
+	FromPhrase   string `json:"from_phrase"`
+	TokenID      string `json:"token_id"`
+	Value        string `json:"value"`
+	FromKeystore string `json:"from_keystore"`
 }
 
 // NewERC20 ...
@@ -51,7 +59,7 @@ func (u *ERC20) Transfer(req ERC20Request) (map[string]string, error) {
 
 // Balance ...
 func (u *ERC20) Balance(tokenID, address string) (map[string]string, error) {
-	apiurl := u.uri + "/v1/token/" + tokenID + "?address=" + address
+	apiurl := u.uri + "/v1/token/" + tokenID + "/balance" + "?address=" + address
 	out := make(map[string]string)
 	err := api.Get(apiurl, &out)
 
@@ -63,6 +71,22 @@ func (u *ERC20) FindOne(tokenID string) (*ERC20Response, error) {
 	apiurl := u.uri + "/v1/token/" + tokenID
 	out := &ERC20Response{}
 	err := api.Get(apiurl, out)
+
+	return out, err
+}
+
+//Pay  ...
+func (u *ERC20) Pay(req *ERC20PayRequest) (map[string]interface{}, error) {
+	apiurl := u.uri + "/v1/token/payment"
+	out := make(map[string]interface{})
+	data := make(url.Values)
+	data.Add("from_address", req.FromAddress)
+	data.Add("token_id", req.TokenID)
+	data.Add("to_address", req.ToAddress)
+	data.Add("value", req.Value)
+	data.Add("from_keystore", req.FromKeystore)
+	data.Add("from_phrase", req.FromPhrase)
+	err := api.PostForm(apiurl, data, &out)
 
 	return out, err
 }
