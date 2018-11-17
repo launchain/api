@@ -6,6 +6,10 @@ import (
 	"net/url"
 )
 
+type Base struct {
+	Code    string
+	Message string
+}
 // UserKeystore ...
 type UserKeystore struct {
 	uri string
@@ -32,6 +36,22 @@ type UserDefalutAddrResquest struct {
 	Code    string
 	Message string
 	Data    UserDefalutAddr
+}
+
+//UserDefalutAddrResquest ...
+type UserDefalutKeystoreAllResponse struct {
+	Base
+	Data    UserDefalutKeystoreAll  `json:"data"`
+}
+
+// UserDefalutKeystoreAll ...
+type UserDefalutKeystoreAll struct {
+	ID       string `json:"id"`
+	UserID   string `json:"user_id"`
+	Address  string `json:"address"`
+	KeyStore string `json:"keystore"`
+	Filename string `json:"filename"`
+	Phrase   string `json:"phrase"`
 }
 
 //UserDefalutAddr ...
@@ -69,4 +89,11 @@ func (u *UserKeystore) GetUserDefaultAddress(userId string) (*UserDefalutAddrRes
 		return nil, err
 	}
 	return out, nil
+}
+
+//GetUserDefaultKeystore ...
+func (u *UserKeystore) GetUserDefaultKeystoreAll(userId string) (*UserDefalutKeystoreAllResponse,error){
+	out := &UserDefalutKeystoreAllResponse{}
+	url := fmt.Sprintf("%s/v1/user/%s/keystore/default-all", u.uri, userId)
+	return out, api.Get(url, &out)
 }
