@@ -38,6 +38,7 @@ type UserRequest struct {
 	RefreshToken        string
 	UnionId             string
 	OpenId              string
+	AppId               string
 }
 
 // UserResponse ...
@@ -66,6 +67,7 @@ type UserResponse struct {
 	UnionId             string    `json:"unionid"`
 	OpenId              string    `json:"openid"`
 	PassStatus          int       `json:"pass_status"`
+	AppId               string    `json:"appid"`
 }
 
 // NewUser ...
@@ -92,6 +94,7 @@ type UserCreateRequest struct {
 	PassWord      string
 	Platform      int
 	WalletAddress string
+	AppID         string
 	WechatInfo
 }
 
@@ -165,6 +168,7 @@ func (u *User) Create(user UserCreateRequest) (*UserResponse, error) {
 	data["phone"] = []string{user.Phone}
 	data["password"] = []string{user.PassWord}
 	data["platform"] = []string{fmt.Sprintf("%d", user.Platform)}
+	data["app_id"] = []string{user.AppID}
 
 	url := u.uri + "/v1/users"
 	out := &UserResponse{}
@@ -187,6 +191,8 @@ func (u *User) AutoCreate(user UserCreateRequest) (*UserResponse, error) {
 	}
 	data["wallet_address"] = []string{user.WalletAddress}
 	data["platform"] = []string{fmt.Sprintf("%d", user.Platform)}
+	data["app_id"] = []string{user.AppID}
+
 	url := u.uri + "/v1/users/phone"
 	out := &UserResponse{}
 	err := api.PostForm(url, data, out)
@@ -244,6 +250,7 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("unionid", user.UnionId)
 	data.Add("openid", user.OpenId)
 	data.Add("refresh_token", user.RefreshToken)
+	data.Add("app_id", user.AppId)
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
