@@ -65,6 +65,7 @@ type UserResponse struct {
 	RefreshToken        string    `json:"refresh_token"`
 	UnionId             string    `json:"unionid"`
 	OpenId              string    `json:"openid"`
+	PassStatus          int       `json:"pass_status"`
 }
 
 // NewUser ...
