@@ -15,7 +15,7 @@ type Session struct {
 
 // SessionResponse ...
 type SessionResponse struct {
-	ID        string    `json:"_id"`
+	ID        string    `json:"id"`
 	Status    int       `json:"status"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -48,4 +48,26 @@ func (s *Session) SignIn(phone, password, deviceID string, platform int) (*Sessi
 	}
 
 	return out, nil
+}
+
+//SignWithPhoneInAndroidByWechat
+func (s *Session) SignWithPhoneInAndroidByWechat(phone, code, unionid, openid, refreshToken string) (*SessionResponse, error) {
+	data := make(url.Values)
+	data["phone"] = []string{phone}
+	data["code"] = []string{code}
+	data["platform"] = []string{"2"}
+	data["type"] = []string{"2"}
+	data["openid"] = []string{openid}
+	data["unionid"] = []string{unionid}
+	data["refresh_token"] = []string{refreshToken}
+
+	url := s.uri + "/v1/sessions/phone"
+	out := &SessionResponse{}
+	err := api.PostForm(url, data, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+
 }
