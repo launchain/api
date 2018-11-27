@@ -9,8 +9,8 @@ import (
 
 // Base ...
 type Base struct {
-	Code    string
-	Message string
+	Code    string	`json:"code"`
+	Message string	`json:"message"`
 }
 
 // UserKeystore ...

@@ -3,8 +3,6 @@ package v1
 import (
 	"fmt"
 	"net/url"
-	"time"
-
 	"github.com/launchain/api"
 )
 
@@ -15,14 +13,17 @@ type Session struct {
 
 // SessionResponse ...
 type SessionResponse struct {
-	ID        string    `json:"id"`
-	Status    int       `json:"status"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-	UserID    string    `json:"user_id"`
-	DeviceID  string    `json:"device_id"`
-	Platform  int       `json:"platform"`
-	Token     string    `json:"token"`
+	ID             string `json:"id"`
+	UserID         string `json:"user_id"`
+	Token          string `json:"token"`
+	PassStatus     int    `json:"pass_status"`
+	Authentication int    `json:"authentication"`
+	SessionId      string `json:"session_id"`
+	OpenID         string `json:"openid"`
+	UnionID        string `json:"unionid"`
+	RefreshToken   string `json:"refresh_token"`
+	Phone          string `json:"phone"`
+	WalletAddress  string `json:"wallet_address"`
 }
 
 // NewSession ...
@@ -50,16 +51,13 @@ func (s *Session) SignIn(phone, password, deviceID string, platform int) (*Sessi
 	return out, nil
 }
 
-//SignWithPhoneInAndroidByWechat
-func (s *Session) SignWithPhoneInAndroidByWechat(phone, code, unionid, openid, refreshToken string) (*SessionResponse, error) {
+//SignWithPhoneInGolo ...
+func (s *Session) SignWithPhoneInGolo(phone, code, deviceID string, platform int) (*SessionResponse, error) {
 	data := make(url.Values)
 	data["phone"] = []string{phone}
 	data["code"] = []string{code}
-	data["platform"] = []string{"2"}
-	data["type"] = []string{"2"}
-	data["openid"] = []string{openid}
-	data["unionid"] = []string{unionid}
-	data["refresh_token"] = []string{refreshToken}
+	data["type"] = []string{"1"}
+	data["device_id"] = []string{deviceID}
 
 	url := s.uri + "/v1/sessions/phone"
 	out := &SessionResponse{}
@@ -67,7 +65,6 @@ func (s *Session) SignWithPhoneInAndroidByWechat(phone, code, unionid, openid, r
 	if err != nil {
 		return nil, err
 	}
-
 	return out, nil
 
 }
