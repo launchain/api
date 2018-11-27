@@ -3,6 +3,8 @@ package v1
 import (
 	"fmt"
 	"net/url"
+	"time"
+
 	"github.com/launchain/api"
 )
 
@@ -65,6 +67,7 @@ func (s *Session) SignWithPhoneInGolo(phone, code, deviceID string, platform int
 	if err != nil {
 		return nil, err
 	}
+
 	return out, nil
 
 }
