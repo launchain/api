@@ -2,14 +2,17 @@ package v1
 
 import (
 	"fmt"
-	"github.com/launchain/api"
 	"net/url"
+
+	"github.com/launchain/api"
 )
 
+// Base ...
 type Base struct {
-	Code    string
-	Message string
+	Code    string	`json:"code"`
+	Message string	`json:"message"`
 }
+
 // UserKeystore ...
 type UserKeystore struct {
 	uri string
@@ -21,10 +24,9 @@ type UserKeyStoreCreateRequest struct {
 	Address  string
 	KeyStore string
 	FileName string
-	Phrase   string
 }
 
-// NewUserKeyStore ...
+// NewUserKeyStorer ...
 func NewUserKeyStorer(c *api.Config) *UserKeystore {
 	c.Check()
 	uri := c.URI()
@@ -38,10 +40,10 @@ type UserDefalutAddrResquest struct {
 	Data    UserDefalutAddr
 }
 
-//UserDefalutAddrResquest ...
+// UserDefalutKeystoreAllResponse ...
 type UserDefalutKeystoreAllResponse struct {
 	Base
-	Data    UserDefalutKeystoreAll  `json:"data"`
+	Data UserDefalutKeystoreAll `json:"data"`
 }
 
 // UserDefalutKeystoreAll ...
@@ -51,7 +53,6 @@ type UserDefalutKeystoreAll struct {
 	Address  string `json:"address"`
 	KeyStore string `json:"keystore"`
 	Filename string `json:"filename"`
-	Phrase   string `json:"phrase"`
 }
 
 //UserDefalutAddr ...
@@ -67,20 +68,18 @@ func (u *UserKeystore) UserKeyStoreCreate(uk *UserKeyStoreCreateRequest) (map[st
 	data.Add("address", uk.Address)
 	data.Add("keystore", uk.KeyStore)
 	data.Add("filename", uk.FileName)
-	data.Add("phrase", uk.Phrase)
-	data.Add("keystore", uk.KeyStore)
 	url := fmt.Sprintf("%s/v1/user/%s/keystore/upload", u.uri, uk.UserID)
 	return out, api.PostForm(url, data, &out)
 }
 
-//GetUserDefaultKeystore ...
+// GetUserDefaultKeystore ...
 func (u *UserKeystore) GetUserDefaultKeystore(userId string) (map[string]interface{}, error) {
 	out := make(map[string]interface{})
 	url := fmt.Sprintf("%s/v1/user/%s/keystore/default", u.uri, userId)
 	return out, api.Get(url, &out)
 }
 
-//GetUserDefaultAddress ...
+// GetUserDefaultAddress ...
 func (u *UserKeystore) GetUserDefaultAddress(userId string) (*UserDefalutAddrResquest, error) {
 	out := &UserDefalutAddrResquest{}
 	url := fmt.Sprintf("%s/v1/user/%s/address/default", u.uri, userId)
@@ -91,8 +90,8 @@ func (u *UserKeystore) GetUserDefaultAddress(userId string) (*UserDefalutAddrRes
 	return out, nil
 }
 
-//GetUserDefaultKeystore ...
-func (u *UserKeystore) GetUserDefaultKeystoreAll(userId string) (*UserDefalutKeystoreAllResponse,error){
+// GetUserDefaultKeystoreAll ...
+func (u *UserKeystore) GetUserDefaultKeystoreAll(userId string) (*UserDefalutKeystoreAllResponse, error) {
 	out := &UserDefalutKeystoreAllResponse{}
 	url := fmt.Sprintf("%s/v1/user/%s/keystore/default-all", u.uri, userId)
 	return out, api.Get(url, &out)
