@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"net/url"
 	"github.com/launchain/api"
+	"net/url"
 )
 
 // ERC20 ...
@@ -23,6 +23,8 @@ type ERC20Response struct {
 	ID      string `json:"id"`
 	Name    string `json:"name"`
 	Symbol  string `json:"symbol"`
+	Logo    string `json:"logo"`
+	Label   string `json:"label"`
 	Total   string `json:"total"`
 	Address string `json:"address"`
 }
@@ -89,4 +91,15 @@ func (u *ERC20) Pay(req *ERC20PayRequest) (map[string]interface{}, error) {
 	err := api.PostForm(apiurl, data, &out)
 
 	return out, err
+}
+
+// GetAllTokens ...
+func (u *ERC20) GetAllTokens() ([]ERC20Response, error) {
+	apiurl := u.uri + "/v1/token"
+	out := make([]ERC20Response, 0)
+	err := api.Get(apiurl, &out)
+	if err != nil {
+		return out, err
+	}
+	return out, nil
 }
