@@ -3,8 +3,6 @@ package v1
 import (
 	"fmt"
 	"net/url"
-	"time"
-
 	"github.com/launchain/api"
 )
 

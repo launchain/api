@@ -3,7 +3,6 @@ package v1
 import (
 	"github.com/launchain/api"
 	"net/url"
-	"fmt"
 )
 
 // Vin ...
@@ -45,7 +44,6 @@ func (v *Vin) CheckVin(req *VinRequest) (*VinResponse,error) {
 	url := v.uri + "/v1/launchain/ocr/vin"
 	out := &VinResponse{}
 	err := api.PostForm(url, data, out)
-	fmt.Println("url=",url)
 	if err != nil {
 		return nil, err
 	}

@@ -199,7 +199,7 @@ func (u *User) AutoCreate(user UserCreateRequest) (*UserResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	
 	return out, nil
 }
 
