@@ -26,7 +26,7 @@ func NewViolation(c *api.Config) *Violation {
 }
 
 // Query ...
-func (v *Violation) Query(req *ViolationQueryReq) (map[string]string, error) {
+func (v *Violation) Query(req *ViolationQueryReq) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data["userid"] = []string{req.UserId}
 	data["hphm"] = []string{req.Hphm}
@@ -35,7 +35,7 @@ func (v *Violation) Query(req *ViolationQueryReq) (map[string]string, error) {
 	data["classno"] = []string{req.ClassNo}
 
 	url := v.uri + "/v1/golo/violation/query"
-	out := make(map[string]string)
+	out := make(map[string]interface{})
 	err := api.PostForm(url, data, &out)
 	if err != nil {
 		return nil, err
