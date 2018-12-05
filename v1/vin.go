@@ -12,7 +12,8 @@ type Vin struct {
 
 // VinRequest  ...
 type VinRequest struct {
-	Img string
+	Img    string
+	UserId string
 }
 
 //VinInfo ...
@@ -22,6 +23,7 @@ type VinInfo struct {
 	LicenseNo     string `json:"license_no"`
 	BrandModelNum string `json:"brand_model_num"`
 	EngineNo      string `json:"engine_no"`
+	Url           string `json:"url"`
 }
 
 //VinResponse ...
@@ -38,9 +40,10 @@ func NewVin(c *api.Config) *Vin {
 }
 
 //CheckVin ...
-func (v *Vin) CheckVin(req *VinRequest) (*VinResponse,error) {
+func (v *Vin) CheckVin(req *VinRequest) (*VinResponse, error) {
 	data := make(url.Values)
 	data.Add("img", req.Img)
+	data.Add("user_id", req.UserId)
 	url := v.uri + "/v1/launchain/ocr/vin"
 	out := &VinResponse{}
 	err := api.PostForm(url, data, out)
