@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"github.com/launchain/api"
 	"net/url"
 )
@@ -97,6 +98,17 @@ func (u *ERC20) Pay(req *ERC20PayRequest) (map[string]interface{}, error) {
 func (u *ERC20) GetAllTokens() ([]ERC20Response, error) {
 	apiurl := u.uri + "/v1/token"
 	out := make([]ERC20Response, 0)
+	err := api.Get(apiurl, &out)
+	if err != nil {
+		return out, err
+	}
+	return out, nil
+}
+
+// GetTokenByID ...
+func (u *ERC20) GetTokenByID(id string) (ERC20Response, error) {
+	apiurl := u.uri + fmt.Sprintf("/v1/token/pk/%s", id)
+	var out ERC20Response
 	err := api.Get(apiurl, &out)
 	if err != nil {
 		return out, err
