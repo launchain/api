@@ -98,6 +98,7 @@ type UserCreateRequest struct {
 	WalletAddress string
 	AppName       string
 	DeviceName    string
+	Email         string
 	WechatInfo
 }
 
@@ -197,6 +198,7 @@ func (u *User) AutoCreate(user UserCreateRequest) (*UserResponse, error) {
 	data["platform"] = []string{fmt.Sprintf("%d", user.Platform)}
 	data["app_name"] = []string{user.AppName}
 	data["device_name"] = []string{user.DeviceName}
+	data["email"] = []string{user.Email}
 
 	url := u.uri + "/v1/users/phone"
 	out := &UserResponse{}
