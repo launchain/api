@@ -19,10 +19,10 @@ type RealNamAuthResponse struct {
 }
 
 // NewRealNamAuth ...
-func NewRealNamAuth(c *api.Config) *CertificationForChain {
+func NewRealNamAuth(c *api.Config) *RealNamAuth {
 	c.Check()
 	uri := c.URI()
-	return &CertificationForChain{uri: uri}
+	return &RealNamAuth{uri: uri}
 }
 
 // RealNameAuth ...
