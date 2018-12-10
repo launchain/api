@@ -30,7 +30,7 @@ func (r *RealNameAuth) CheckRealNameAuth(name, idcard string) (*RealNameAuthResp
 	data := make(url.Values)
 	data.Add("name", name)
 	data.Add("idcard", idcard)
-	Url := fmt.Sprintf("%s%s", r.uri, "/v1/car/certification")
+	Url := fmt.Sprintf("%s%s", r.uri, "/v1/realname-auth")
 	out := RealNameAuthResponse{}
 	err := api.PostForm(Url, data, &out)
 	if err != nil {
