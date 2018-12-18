@@ -31,7 +31,7 @@ func (c *CertificationForChain) CreateChain(req *CertificationForChainRequest) (
 	data.Add("name", req.Name)
 	data.Add("address", req.Address)
 	data.Add("vin", req.Vin)
-	Url := fmt.Sprintf("%s%s", c.uri, "/v1/car/certification")
+	Url := fmt.Sprintf("%s%s", c.uri, "/v1/blockchain/certification")
 	out := make(map[string]interface{})
 	return out, api.PostForm(Url, data, &out)
 }
