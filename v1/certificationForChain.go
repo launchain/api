@@ -13,9 +13,9 @@ type CertificationForChain struct {
 
 // CertificationRequest ..
 type CertificationForChainRequest struct {
-	Name    string
-	Vin     string
-	Address string
+	Name        string
+	VinOrIDCard string
+	Address     string
 }
 
 // NewCertificationForChain ...
@@ -25,13 +25,24 @@ func NewCertificationForChain(c *api.Config) *CertificationForChain {
 	return &CertificationForChain{uri: uri}
 }
 
-// CreateChain ...
-func (c *CertificationForChain) CreateChain(req *CertificationForChainRequest) (map[string]interface{}, error) {
+// CreateCarChain ...
+func (c *CertificationForChain) CreateCarChain(req *CertificationForChainRequest) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data.Add("name", req.Name)
 	data.Add("address", req.Address)
-	data.Add("vin", req.Vin)
-	Url := fmt.Sprintf("%s%s", c.uri, "/v1/car/certification")
+	data.Add("vin", req.VinOrIDCard)
+	Url := fmt.Sprintf("%s%s", c.uri, "/v1/blockchain/vin-certification")
+	out := make(map[string]interface{})
+	return out, api.PostForm(Url, data, &out)
+}
+
+// CreateIDCardChain ...
+func (c *CertificationForChain) CreateIDCardChain(req *CertificationForChainRequest) (map[string]interface{}, error) {
+	data := make(url.Values)
+	data.Add("name", req.Name)
+	data.Add("address", req.Address)
+	data.Add("id_card", req.VinOrIDCard)
+	Url := fmt.Sprintf("%s%s", c.uri, "/v1/blockchain/id-certification")
 	out := make(map[string]interface{})
 	return out, api.PostForm(Url, data, &out)
 }
