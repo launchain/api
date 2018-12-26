@@ -278,3 +278,19 @@ func (u *User) SensitiveData(id string) (*UserResponse, error) {
 
 	return out, nil
 }
+
+// CheckPassword ...
+func (u *User) CheckPasswordWithEmail(email, password string) (*UserResponse, error) {
+	data := make(url.Values)
+	data["email"] = []string{email}
+	data["password"] = []string{password}
+
+	url := u.uri + "/v1/ps/email"
+	out := &UserResponse{}
+	err := api.PostForm(url, data, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
