@@ -115,6 +115,13 @@ type UserFindResponse struct {
 	Count int             `json:"count"`
 }
 
+// CheckPassByEmailResponse ...
+type CheckPassByEmailResponse struct {
+	Email          string `json:"email"`
+	Authentication int    `json:"authentication"`
+	IsSetPassword  bool   `json:"is_set_password"`
+}
+
 // Find ...
 func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 	//	url := u.uri + "/v1/users?"
@@ -280,13 +287,13 @@ func (u *User) SensitiveData(id string) (*UserResponse, error) {
 }
 
 // CheckPassword ...
-func (u *User) CheckPasswordWithEmail(email, password string) (*UserResponse, error) {
+func (u *User) CheckPasswordWithEmail(email, password string) (*CheckPassByEmailResponse, error) {
 	data := make(url.Values)
 	data["email"] = []string{email}
 	data["password"] = []string{password}
 
 	url := u.uri + "/v1/ps/email"
-	out := &UserResponse{}
+	out := &CheckPassByEmailResponse{}
 	err := api.PostForm(url, data, out)
 	if err != nil {
 		return nil, err
