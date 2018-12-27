@@ -115,6 +115,13 @@ type UserFindResponse struct {
 	Count int             `json:"count"`
 }
 
+// CheckUserByEmailResponse ...
+type CheckUserByEmailResponse struct {
+	Email          string `json:"email"`
+	Authentication int    `json:"authentication"`
+	IsSetPassword  bool   `json:"is_set_password"`
+}
+
 // Find ...
 func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 	//	url := u.uri + "/v1/users?"
@@ -272,7 +279,35 @@ func (u *User) SensitiveData(id string) (*UserResponse, error) {
 	url := fmt.Sprintf("%s/v1/users/%s/sensitivedata", u.uri, id)
 	out := &UserResponse{}
 	err := api.Get(url, out)
+
 	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CheckPasswordWithEmail ...
+func (u *User) CheckPasswordWithEmail(email, password string) (*UserResponse, error) {
+	data := make(url.Values)
+	data["email"] = []string{email}
+	data["password"] = []string{password}
+
+	url := u.uri + "/v1/ps/email"
+	out := &UserResponse{}
+	err := api.PostForm(url, data, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
+
+// CheckUserWithEmail ...
+func (u *User) CheckUserWithEmail(email string) (*CheckUserByEmailResponse, error) {
+
+	url := u.uri + fmt.Sprintf("/v1/users/email?email=%v", email)
+	out := &CheckUserByEmailResponse{}
+	err := api.Get(url, out); if err != nil {
 		return nil, err
 	}
 
