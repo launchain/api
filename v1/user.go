@@ -301,3 +301,17 @@ func (u *User) CheckPasswordWithEmail(email, password string) (*CheckPassByEmail
 
 	return out, nil
 }
+
+// CheckUserWithEmail ...
+func (u *User) CheckUserWithEmail(email string) (*CheckPassByEmailResponse, error) {
+	data := make(url.Values)
+
+	url := u.uri + fmt.Sprintf("/v1/users/email?email%v", email)
+	out := &CheckPassByEmailResponse{}
+	err := api.PostForm(url, data, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
