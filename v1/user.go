@@ -279,10 +279,10 @@ func (u *User) SensitiveData(id string) (*UserResponse, error) {
 	url := fmt.Sprintf("%s/v1/users/%s/sensitivedata", u.uri, id)
 	out := &UserResponse{}
 	err := api.Get(url, out)
+
 	if err != nil {
 		return nil, err
 	}
-
 	return out, nil
 }
 
@@ -304,12 +304,10 @@ func (u *User) CheckPasswordWithEmail(email, password string) (*UserResponse, er
 
 // CheckUserWithEmail ...
 func (u *User) CheckUserWithEmail(email string) (*CheckUserByEmailResponse, error) {
-	data := make(url.Values)
 
 	url := u.uri + fmt.Sprintf("/v1/users/email?email=%v", email)
 	out := &CheckUserByEmailResponse{}
-	err := api.PostForm(url, data, out)
-	if err != nil {
+	err := api.Get(url, out); if err != nil {
 		return nil, err
 	}
 
