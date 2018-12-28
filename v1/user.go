@@ -116,7 +116,7 @@ type UserFindResponse struct {
 }
 
 // CheckUserByEmailResponse ...
-type CheckUserByEmailResponse struct {
+type CheckUserResponse struct {
 	Email          string `json:"email"`
 	Phone          string `json:"phone"`
 	Authentication int    `json:"authentication"`
@@ -304,10 +304,10 @@ func (u *User) CheckPasswordWithEmail(email, password string) (*UserResponse, er
 }
 
 // CheckUserWithEmailOrPhone ...
-func (u *User) CheckUserWithEmailOrPhone(email, phone string) (*CheckUserByEmailResponse, error) {
+func (u *User) CheckUserWithEmailOrPhone(email, phone string) (*CheckUserResponse, error) {
 
 	url := u.uri + fmt.Sprintf("/v1/users/check?email=%s&phone=%s", email, phone)
-	out := &CheckUserByEmailResponse{}
+	out := &CheckUserResponse{}
 	err := api.Get(url, out);
 	if err != nil {
 		return nil, err
