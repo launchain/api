@@ -316,3 +316,40 @@ func (u *User) CheckUser(email, phone, userID string) (*CheckUserResponse, error
 
 	return out, nil
 }
+
+// UpdateByEmail ...
+func (u *User) UpdateByEmail(email string, user *UserRequest) error {
+	if email == "" {
+		return errors.New("email不能为空")
+	}
+
+	data := make(url.Values)
+	data.Add("password", user.Password)
+	data.Add("authentication", fmt.Sprintf("%d", user.Authentication))
+	data.Add("phone", user.Phone)
+	//data.Add("email", user.Email)
+	data.Add("idcard", user.IDCard)
+	data.Add("realname", user.RealName)
+	data.Add("portrait", user.Portrait)
+	data.Add("residence", user.Residence)
+	data.Add("degree", user.Degree)
+	data.Add("career", user.Career)
+	data.Add("wallet_address", user.WalletAddress)
+	data.Add("carinfo", user.CarInfo)
+	data.Add("alipay", user.Alipay)
+	data.Add("driverlicense", user.DriverLicense)
+	data.Add("wallet_address", user.WalletAddress)
+	data.Add("rolename", user.RoleName)
+	data.Add("roleimg", user.RoleImg)
+	data.Add("phone", user.Phone)
+	data.Add("driverlicense_status", fmt.Sprintf("%d", user.DriverLicenseStatus))
+	data.Add("carinfo_status", fmt.Sprintf("%d", user.CarInfoStatus))
+	data.Add("role_status", fmt.Sprintf("%d", user.RoleStatus))
+	data.Add("unionid", user.UnionId)
+	data.Add("openid", user.OpenId)
+	data.Add("refresh_token", user.RefreshToken)
+	data.Add("app_name", user.AppName)
+	data.Add("device_name", user.DeviceName)
+	url := u.uri + fmt.Sprintf("/v1/users/email/%s", email)
+	return api.Patch(url, data, nil)
+}
