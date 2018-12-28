@@ -305,7 +305,7 @@ func (u *User) CheckPasswordWithEmail(email, password string) (*UserResponse, er
 // CheckUserWithEmail ...
 func (u *User) CheckUserWithEmail(email string) (*CheckUserByEmailResponse, error) {
 
-	url := u.uri + fmt.Sprintf("/v1/users/email?email=%v", email)
+	url := u.uri + fmt.Sprintf("/v1/users/checkemail?email=%v", email)
 	out := &CheckUserByEmailResponse{}
 	err := api.Get(url, out); if err != nil {
 		return nil, err
