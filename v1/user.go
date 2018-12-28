@@ -302,8 +302,8 @@ func (u *User) CheckPasswordWithEmail(email, password string) (*UserResponse, er
 	return out, nil
 }
 
-// CheckUserWithEmail ...
-func (u *User) CheckUserWithEmail(email, phone string) (*CheckUserByEmailResponse, error) {
+// CheckUserWithEmailOrPhone ...
+func (u *User) CheckUserWithEmailOrPhone(email, phone string) (*CheckUserByEmailResponse, error) {
 
 	url := u.uri + fmt.Sprintf("/v1/users/check?email=%s&phone=%s", email, phone)
 	out := &CheckUserByEmailResponse{}
