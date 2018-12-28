@@ -118,6 +118,7 @@ type UserFindResponse struct {
 // CheckUserByEmailResponse ...
 type CheckUserByEmailResponse struct {
 	Email          string `json:"email"`
+	Phone          string `json:"phone"`
 	Authentication int    `json:"authentication"`
 	IsSetPassword  bool   `json:"is_set_password"`
 }
