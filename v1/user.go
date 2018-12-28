@@ -303,10 +303,10 @@ func (u *User) CheckPasswordWithEmail(email, password string) (*UserResponse, er
 	return out, nil
 }
 
-// CheckUserWithEmailOrPhone ...
-func (u *User) CheckUserWithEmailOrPhone(email, phone string) (*CheckUserResponse, error) {
-
-	url := u.uri + fmt.Sprintf("/v1/users/check?email=%s&phone=%s", email, phone)
+// CheckUser ...
+func (u *User) CheckUser(email, phone,userID string) (*CheckUserResponse, error) {
+	// 三者传其一
+	url := u.uri + fmt.Sprintf("/v1/users/check?email=%s&phone=%s&user_id=%s", email, phone, userID)
 	out := &CheckUserResponse{}
 	err := api.Get(url, out);
 	if err != nil {
