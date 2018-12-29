@@ -2,8 +2,8 @@ package v1
 
 import (
 	"fmt"
-	"net/url"
 	"github.com/launchain/api"
+	"net/url"
 )
 
 // Session ...
@@ -34,7 +34,7 @@ func NewSession(c *api.Config) *Session {
 }
 
 // SignIn ...
-func (s *Session) SignIn(phone, password, deviceID string, platform int) (*SessionResponse, error) {
+func (s *Session) SignIn(phone, password, deviceID string, platform int) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data["phone"] = []string{phone}
 	data["password"] = []string{password}
@@ -42,7 +42,7 @@ func (s *Session) SignIn(phone, password, deviceID string, platform int) (*Sessi
 	data["platform"] = []string{fmt.Sprintf("%d", platform)}
 
 	url := s.uri + "/v1/sessions"
-	out := &SessionResponse{}
+	out := make(map[string]interface{})
 	err := api.PostForm(url, data, out)
 	if err != nil {
 		return nil, err
