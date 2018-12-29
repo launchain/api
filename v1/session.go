@@ -69,3 +69,22 @@ func (s *Session) SignWithPhoneInGolo(phone, code, deviceID string, platform int
 	return out, nil
 
 }
+
+
+// SignIn ...
+func (s *Session) SignInWithEmail(phone, password, deviceID string, platform int) (map[string]interface{}, error) {
+	data := make(url.Values)
+	data["phone"] = []string{phone}
+	data["password"] = []string{password}
+	data["device_id"] = []string{deviceID}
+	data["platform"] = []string{fmt.Sprintf("%d", platform)}
+
+	url := s.uri + "/v1/sessions/email"
+	out := make(map[string]interface{})
+	err := api.PostForm(url, data, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
