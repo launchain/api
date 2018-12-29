@@ -72,9 +72,9 @@ func (s *Session) SignWithPhoneInGolo(phone, code, deviceID string, platform int
 
 
 // SignIn ...
-func (s *Session) SignInWithEmail(phone, password, deviceID string, platform int) (map[string]interface{}, error) {
+func (s *Session) SignInWithEmail(email, password, deviceID string, platform int) (map[string]interface{}, error) {
 	data := make(url.Values)
-	data["phone"] = []string{phone}
+	data["email"] = []string{email}
 	data["password"] = []string{password}
 	data["device_id"] = []string{deviceID}
 	data["platform"] = []string{fmt.Sprintf("%d", platform)}
