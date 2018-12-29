@@ -43,7 +43,7 @@ func (s *Session) SignIn(phone, password, deviceID string, platform int) (map[st
 
 	url := s.uri + "/v1/sessions"
 	out := make(map[string]interface{})
-	err := api.PostForm(url, data, out)
+	err := api.PostForm(url, data, &out)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func (s *Session) SignInWithEmail(email, password, deviceID string, platform int
 
 	url := s.uri + "/v1/sessions/email"
 	out := make(map[string]interface{})
-	err := api.PostForm(url, data, out)
+	err := api.PostForm(url, data, &out)
 	if err != nil {
 		return nil, err
 	}
