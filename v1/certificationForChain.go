@@ -11,11 +11,25 @@ type CertificationForChain struct {
 	uri string
 }
 
-// CertificationRequest ..
-type CertificationForChainRequest struct {
-	Name        string
-	VinOrIDCard string
-	Address     string
+// VinForChainRequest ...
+type VinForChainRequest struct {
+	Name    string
+	Vin     string
+	Address string
+}
+
+// IDCardForChainRequest ..
+type IDCardForChainRequest struct {
+	Name    string
+	IDCard  string
+	Address string
+}
+
+// RoleForChainRequest ...
+type RoleForChainRequest struct {
+	RoleID   string
+	RoleName string
+	Address  string
 }
 
 // NewCertificationForChain ...
@@ -25,24 +39,35 @@ func NewCertificationForChain(c *api.Config) *CertificationForChain {
 	return &CertificationForChain{uri: uri}
 }
 
-// CreateCarChain ...
-func (c *CertificationForChain) CreateCarChain(req *CertificationForChainRequest) (map[string]interface{}, error) {
+// CreateVinForChain ...
+func (c *CertificationForChain) CreateVinForChain(req *VinForChainRequest) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data.Add("name", req.Name)
 	data.Add("address", req.Address)
-	data.Add("vin", req.VinOrIDCard)
+	data.Add("vin", req.Vin)
 	Url := fmt.Sprintf("%s%s", c.uri, "/v1/blockchain/vin-certification")
 	out := make(map[string]interface{})
 	return out, api.PostForm(Url, data, &out)
 }
 
 // CreateIDCardChain ...
-func (c *CertificationForChain) CreateIDCardChain(req *CertificationForChainRequest) (map[string]interface{}, error) {
+func (c *CertificationForChain) CreateIDCardChain(req *IDCardForChainRequest) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data.Add("name", req.Name)
 	data.Add("address", req.Address)
-	data.Add("id_card", req.VinOrIDCard)
+	data.Add("id_card", req.IDCard)
 	Url := fmt.Sprintf("%s%s", c.uri, "/v1/blockchain/id-certification")
+	out := make(map[string]interface{})
+	return out, api.PostForm(Url, data, &out)
+}
+
+// CreateRoleChain ...
+func (c *CertificationForChain) CreateRoleChain(req *RoleForChainRequest) (map[string]interface{}, error) {
+	data := make(url.Values)
+	data.Add("role_id", req.RoleID)
+	data.Add("role_name", req.RoleName)
+	data.Add("address", req.Address)
+	Url := fmt.Sprintf("%s%s", c.uri, "/v1/blockchain/role-certification")
 	out := make(map[string]interface{})
 	return out, api.PostForm(Url, data, &out)
 }
