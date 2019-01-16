@@ -7,12 +7,6 @@ import (
 	"github.com/launchain/api"
 )
 
-// Base ...
-type Base struct {
-	Code    string	`json:"code"`
-	Message string	`json:"message"`
-}
-
 // UserKeystore ...
 type UserKeystore struct {
 	uri string
@@ -95,4 +89,15 @@ func (u *UserKeystore) GetUserDefaultKeystoreAll(userId string) (*UserDefalutKey
 	out := &UserDefalutKeystoreAllResponse{}
 	url := fmt.Sprintf("%s/v1/user/%s/keystore/default-all", u.uri, userId)
 	return out, api.Get(url, &out)
+}
+
+// GetUserDefaultKeystoreAll ...
+func (u *UserKeystore) GetKeystoreByAddress(address string) (*UserDefalutKeystoreAllResponse, error) {
+	out := &UserDefalutKeystoreAllResponse{}
+	url := fmt.Sprintf("%s/v1/user-keystore/address/%s", u.uri, address)
+	err := api.Get(url, &out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
