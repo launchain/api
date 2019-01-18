@@ -40,6 +40,8 @@ type UserRequest struct {
 	OpenId              string
 	AppName             string
 	DeviceName          string
+	Avatar              string
+	Nickname            string
 }
 
 // UserResponse ...
@@ -70,6 +72,8 @@ type UserResponse struct {
 	PassStatus          int       `json:"pass_status"`
 	AppName             string    `json:"appname"`
 	DeviceName          string    `json:"devicename"`
+	Avatar              string    `json:"avatar"`
+	Nickname            string    `json:"nickname"`
 }
 
 // NewUser ...
@@ -268,6 +272,8 @@ func (u *User) UpdateID(id string, user *UserRequest) error {
 	data.Add("refresh_token", user.RefreshToken)
 	data.Add("app_name", user.AppName)
 	data.Add("device_name", user.DeviceName)
+	data.Add("avatar", user.Avatar)
+	data.Add("nickname", user.Nickname)
 	url := u.uri + "/v1/users/" + id
 	return api.Patch(url, data, nil)
 }
@@ -350,6 +356,8 @@ func (u *User) UpdateByEmail(email string, user *UserRequest) error {
 	data.Add("refresh_token", user.RefreshToken)
 	data.Add("app_name", user.AppName)
 	data.Add("device_name", user.DeviceName)
+	data.Add("avatar", user.Avatar)
+	data.Add("nickname", user.Nickname)
 	url := u.uri + fmt.Sprintf("/v1/users/email/%s", email)
 	return api.Patch(url, data, nil)
 }
