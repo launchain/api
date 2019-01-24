@@ -370,9 +370,6 @@ func (u *User) UpdateByEmail(email string, user *UserRequest) error {
 
 // FindAllUsersByAddress ...
 func (u *User) FindAllUsersByAddress(req *FindUserByAddressRequest) (*UserFindResponse, error) {
-	if len(req.WalletAddress) < 1 {
-		return nil, errors.New("wallet address is empty")
-	}
 	out := &UserFindResponse{}
 	params, _ := json.Marshal(req)
 	err := api.PostJson(u.uri+"/v1/users/address", string(params), out)
