@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/url"
@@ -100,6 +101,11 @@ type UserCreateRequest struct {
 	DeviceName    string
 	Email         string
 	WechatInfo
+}
+
+// FindUserByAddressRequest ...
+type FindUserByAddressRequest struct {
+	WalletAddress []string `json:"wallet_address"`
 }
 
 //WechatInfo ...
@@ -352,4 +358,19 @@ func (u *User) UpdateByEmail(email string, user *UserRequest) error {
 	data.Add("device_name", user.DeviceName)
 	url := u.uri + fmt.Sprintf("/v1/users/email/%s", email)
 	return api.Patch(url, data, nil)
+}
+
+// FindAllUsersByAddress ...
+func (u *User) FindAllUsersByAddress(req *FindUserByAddressRequest) (*UserFindResponse, error) {
+	if len(req.WalletAddress) < 1 {
+		return nil, errors.New("wallet address is empty")
+	}
+	out := &UserFindResponse{}
+	params, _ := json.Marshal(req)
+	err := api.PostJson(u.uri+"/v1/users/address", string(params), out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
 }
