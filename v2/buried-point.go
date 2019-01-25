@@ -6,8 +6,21 @@ import (
 	"github.com/launchain/api/v1"
 )
 
+// BuriedPoint ...
+type BuriedPoint struct {
+	uri string
+}
+
+// NewBuriedPoint ...
+func NewBuriedPoint(c *api.Config) *BuriedPoint {
+	c.Check()
+	uri := c.URI()
+	return &BuriedPoint{uri: uri}
+}
+
+
 //InsertRecord ...
-func (p *v1.BuriedPoint) InsertRecord(req *v1.InsertRecordReq) (map[string]interface{}, error) {
+func (p *BuriedPoint) InsertRecord(req *v1.InsertRecordReq) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data["first_level"] = []string{req.FirstLevel}
 	data["second_level"] = []string{req.SecondLevel}

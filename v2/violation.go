@@ -6,8 +6,22 @@ import (
 	"github.com/launchain/api"
 )
 
+// Violation ...
+type Violation struct {
+	uri string
+}
+
+
+// NewViolation ...
+func NewViolation(c *api.Config) *Violation {
+	c.Check()
+	uri := c.URI()
+	return &Violation{uri: uri}
+}
+
+
 // Query ...
-func (v *v1.Violation) Query(req *v1.ViolationQueryReq) (map[string]interface{}, error) {
+func (v *Violation) Query(req *v1.ViolationQueryReq) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data["userid"] = []string{req.UserId}
 	data["hphm"] = []string{req.Hphm}

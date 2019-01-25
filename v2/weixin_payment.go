@@ -7,9 +7,20 @@ import (
 	"fmt"
 )
 
+// Violation ...
+type WeixinPayment struct {
+	uri string
+}
+
+//NewWeixinPayment ...
+func NewWeixinPayment(c *api.Config) *WeixinPayment {
+	c.Check()
+	uri := c.URI()
+	return &WeixinPayment{uri: uri}
+}
 
 // Query ...
-func (v *v1.WeixinPayment) Prepay(req *v1.WeixinPaymentReq) (map[string]interface{}, error) {
+func (v *WeixinPayment) Prepay(req *v1.WeixinPaymentReq) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data["order_id"] = []string{req.OrderId}
 	data["platform"] = []string{req.Platform}
