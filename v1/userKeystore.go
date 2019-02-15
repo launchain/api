@@ -101,3 +101,14 @@ func (u *UserKeystore) GetKeystoreByAddress(address string) (*UserDefalutKeystor
 	}
 	return out, nil
 }
+
+// GetUserinfoByAddress ...
+func (u *UserKeystore) GetUserinfoByAddress(address string) (*UserDefalutKeystoreAllResponse, error) {
+	out := &UserDefalutKeystoreAllResponse{}
+	url := fmt.Sprintf("%s/v1/user-keystore/userinfo/%s", u.uri, address)
+	err := api.Get(url, &out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
