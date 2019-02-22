@@ -1,6 +1,7 @@
 package v2
 
 import (
+	"github.com/launchain/api/v1"
 	"net/url"
 	"github.com/launchain/api"
 )
@@ -10,13 +11,6 @@ type Violation struct {
 	uri string
 }
 
-type ViolationQueryReq struct {
-	Hphm     string
-	Hpzl     string
-	EngineNo string
-	ClassNo  string
-	UserId   string
-}
 
 // NewViolation ...
 func NewViolation(c *api.Config) *Violation {
@@ -25,8 +19,9 @@ func NewViolation(c *api.Config) *Violation {
 	return &Violation{uri: uri}
 }
 
+
 // Query ...
-func (v *Violation) Query(req *ViolationQueryReq) (map[string]interface{}, error) {
+func (v *Violation) Query(req *v1.ViolationQueryReq) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data["userid"] = []string{req.UserId}
 	data["hphm"] = []string{req.Hphm}

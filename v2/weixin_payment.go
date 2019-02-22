@@ -1,6 +1,7 @@
 package v2
 
 import (
+	"github.com/launchain/api/v1"
 	"net/url"
 	"github.com/launchain/api"
 	"fmt"
@@ -11,17 +12,7 @@ type WeixinPayment struct {
 	uri string
 }
 
-type WeixinPaymentReq struct {
-	OrderId     string
-	Platform    string
-	GoodsDesc   string
-	TotalAmount string
-	NotifyUrl   string
-	TradeType   string
-	OpenId      string
-}
-
-// NewWeixinPayment ...
+//NewWeixinPayment ...
 func NewWeixinPayment(c *api.Config) *WeixinPayment {
 	c.Check()
 	uri := c.URI()
@@ -29,7 +20,7 @@ func NewWeixinPayment(c *api.Config) *WeixinPayment {
 }
 
 // Query ...
-func (v *WeixinPayment) Prepay(req *WeixinPaymentReq) (map[string]interface{}, error) {
+func (v *WeixinPayment) Prepay(req *v1.WeixinPaymentReq) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data["order_id"] = []string{req.OrderId}
 	data["platform"] = []string{req.Platform}
