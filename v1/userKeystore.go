@@ -18,6 +18,7 @@ type UserKeyStoreCreateRequest struct {
 	Address  string
 	KeyStore string
 	FileName string
+	Phrase   string
 }
 
 // NewUserKeyStorer ...
@@ -62,6 +63,7 @@ func (u *UserKeystore) UserKeyStoreCreate(uk *UserKeyStoreCreateRequest) (map[st
 	data.Add("address", uk.Address)
 	data.Add("keystore", uk.KeyStore)
 	data.Add("filename", uk.FileName)
+	data.Add("phrase", uk.Phrase)
 	url := fmt.Sprintf("%s/v1/user/%s/keystore/upload", u.uri, uk.UserID)
 	return out, api.PostForm(url, data, &out)
 }
