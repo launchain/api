@@ -5,7 +5,7 @@ import (
 	"github.com/launchain/api"
 )
 
-// Violation ...
+// WeixinAuth ...
 type WeixinAuth struct {
 	uri string
 }
@@ -21,6 +21,7 @@ type WxAuthGetUserInfoByCodeRes struct {
 	Data    WeixinAuthUserInfoRes
 }
 
+//WeixinAuthUserInfoRes ...
 type WeixinAuthUserInfoRes struct {
 	OpenID     string   `json:"open_id"`
 	NickName   string   `json:"nick_name"`
