@@ -11,6 +11,14 @@ type Session struct {
 	uri string
 }
 
+type SignWithPhoneReq struct {
+	Phone    string
+	Code     string
+	Type     int
+	DeviceID string
+	Platform int
+}
+
 // SessionResponse ...
 type SessionResponse struct {
 	ID             string `json:"id"`
@@ -52,12 +60,13 @@ func (s *Session) SignIn(phone, password, deviceID string, platform int) (map[st
 }
 
 //SignWithPhoneInGolo ...
-func (s *Session) SignWithPhoneInGolo(phone, code, deviceID string, platform int) (*SessionResponse, error) {
+func (s *Session) SignWithPhone(req *SignWithPhoneReq) (*SessionResponse, error) {
 	data := make(url.Values)
-	data["phone"] = []string{phone}
-	data["code"] = []string{code}
-	data["type"] = []string{"1"}
-	data["device_id"] = []string{deviceID}
+	data["phone"] = []string{req.Phone}
+	data["code"] = []string{req.Code}
+	data["type"] = []string{fmt.Sprintf("%d", req.Type)}
+	data["device_id"] = []string{req.DeviceID}
+	data["platform"] = []string{fmt.Sprintf("%d", req.Platform)}
 
 	url := s.uri + "/v1/sessions/phone"
 	out := &SessionResponse{}
@@ -67,9 +76,7 @@ func (s *Session) SignWithPhoneInGolo(phone, code, deviceID string, platform int
 	}
 
 	return out, nil
-
 }
-
 
 // SignIn ...
 func (s *Session) SignInWithEmail(email, password, deviceID string, platform int) (map[string]interface{}, error) {
