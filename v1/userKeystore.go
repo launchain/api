@@ -48,6 +48,7 @@ type UserDefalutKeystoreAll struct {
 	Address  string `json:"address"`
 	KeyStore string `json:"keystore"`
 	Filename string `json:"filename"`
+	Phrase   string `json:"phrase"`
 }
 
 //UserDefalutAddr ...
