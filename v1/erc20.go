@@ -28,6 +28,7 @@ type ERC20Response struct {
 	Label   string `json:"label"`
 	Total   string `json:"total"`
 	Address string `json:"address"`
+	Type    int    `json:"type"`
 }
 
 type ERC20PayRequest struct {
