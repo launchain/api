@@ -2,9 +2,10 @@ package v1
 
 import (
 	"fmt"
-	"github.com/launchain/api"
 	"net/url"
 	"time"
+
+	"github.com/launchain/api"
 )
 
 // TokenFlow ...
@@ -24,7 +25,7 @@ type CreateTokenFlowRequest struct {
 	Remark  string `json:"remark"`
 }
 
-//GetTokenFlowReq ...
+// GetTokenFlowReq ...
 type GetTokenFlowReq struct {
 	TokenID string
 	Address string
@@ -32,6 +33,7 @@ type GetTokenFlowReq struct {
 	Limit   int
 }
 
+// TokenFlowSchema ...
 type TokenFlowSchema struct {
 	TokenID   string    `json:"tokenid"`
 	From      string    `json:"from"`
@@ -44,25 +46,27 @@ type TokenFlowSchema struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+// TokenFlowsRes ...
 type TokenFlowsRes struct {
 	Count int `json:"count"`
 	Txn   []TokenFlowSchema
 }
 
+// GetTokenFlowRes ...
 type GetTokenFlowRes struct {
 	Code    string        `json:"code"`
 	Message string        `json:"message"`
 	Data    TokenFlowsRes `json:"data"`
 }
 
-//GetFlowCountByTimeReq ...
+// GetFlowCountByTimeReq ...
 type GetFlowCountByTimeReq struct {
 	TokenID   string
 	StartTime string
 	EndTime   string
 }
 
-//GetFlowsByTimeReq ...
+// GetFlowsByTimeReq ...
 type GetFlowsByTimeReq struct {
 	GetFlowCountByTimeReq
 	Count int
@@ -92,7 +96,7 @@ func (t *TokenFlow) CreteTokenFlow(req *CreateTokenFlowRequest) (map[string]inte
 	return out, api.PostForm(uri, data, &out)
 }
 
-//GetTokenFlow ...
+// GetTokenFlow ...
 func (t *TokenFlow) GetTokenFlow(req *GetTokenFlowReq) (GetTokenFlowRes, error) {
 	out := GetTokenFlowRes{}
 	url := fmt.Sprintf("%s/v1/tokenflow/token/%s/address/%s?page=%d&limit=%d",
@@ -104,26 +108,27 @@ func (t *TokenFlow) GetTokenFlow(req *GetTokenFlowReq) (GetTokenFlowRes, error) 
 	return out, nil
 }
 
-//GetFlowCountByTime ...
-func (t *TokenFlow) GetFlowCountByTime(req *GetFlowCountByTimeReq) (GetTokenFlowRes, error) {
-	out := GetTokenFlowRes{}
-	url := fmt.Sprintf("%s/v1/tokenflow/token/%s?start_time=%s&end_time=%s",
+// GetFlowCountByTime ...
+func (t *TokenFlow) GetFlowCountByTime(req *GetFlowCountByTimeReq) (*GetTokenFlowRes, error) {
+	out := &GetTokenFlowRes{}
+	url := fmt.Sprintf("%s/v1/tokenflow/token/%s/count?start_time=%s&end_time=%s",
 		t.uri, req.TokenID, req.StartTime, req.EndTime)
-	err := api.Get(url, &out)
+
+	err := api.Get(url, out)
 	if err != nil {
-		return GetTokenFlowRes{}, err
+		return nil, err
 	}
 	return out, nil
 }
 
-//GetFlowsByTime ...
-func (t *TokenFlow) GetFlowsByTime(req *GetFlowsByTimeReq) (GetTokenFlowRes, error) {
-	out := GetTokenFlowRes{}
-	url := fmt.Sprintf("%s/v1/tokenflow/token/%s/count/%d?start_time=%s&end_time=%s&skip=%d",
-		t.uri, req.TokenID, req.Count, req.StartTime, req.EndTime, req.Skip)
-	err := api.Get(url, &out)
+// GetFlowsByTime ...
+func (t *TokenFlow) GetFlowsByTime(req *GetFlowsByTimeReq) (*GetTokenFlowRes, error) {
+	out := &GetTokenFlowRes{}
+	url := fmt.Sprintf("%s/v1/tokenflow/token/%s/txns?start_time=%s&end_time=%s&skip=%d&count=%d",
+		t.uri, req.TokenID, req.StartTime, req.EndTime, req.Skip, req.Count)
+	err := api.Get(url, out)
 	if err != nil {
-		return GetTokenFlowRes{}, err
+		return nil, err
 	}
 	return out, nil
 }
