@@ -51,3 +51,14 @@ func (a *WeixinAuth) GetUserInfoByCode(req WxAuthGetUserInfoByCodeReq) (WxAuthGe
 	}
 	return out, nil
 }
+
+//GetUserInfoByCode ...
+func (a *WeixinAuth) GetRRDUserInfoByCode(req WxAuthGetUserInfoByCodeReq) (WxAuthGetUserInfoByCodeRes,error) {
+	out := WxAuthGetUserInfoByCodeRes{}
+	url := fmt.Sprintf("%s/v1/weixin/rrd/auth?code=%s", a.uri, req.Code)
+	err := api.Get(url, &out)
+	if err != nil {
+		return WxAuthGetUserInfoByCodeRes{}, err
+	}
+	return out, nil
+}
