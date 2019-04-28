@@ -15,14 +15,15 @@ type TokenFlow struct {
 
 // CreateTokenFlowRequest ...
 type CreateTokenFlowRequest struct {
-	TokenID string `json:"tokenid"`
-	From    string `json:"from"`
-	To      string `json:"to"`
-	Value   string `json:"value"`
-	TxnHash string `json:"txnhash"`
-	Rule    string `json:"rule"`
-	Device  string `json:"device"`
-	Remark  string `json:"remark"`
+	TokenID  string `json:"tokenid"`
+	From     string `json:"from"`
+	To       string `json:"to"`
+	Value    string `json:"value"`
+	TxnHash  string `json:"txnhash"`
+	Rule     string `json:"rule"`
+	Device   string `json:"device"`
+	Remark   string `json:"remark"`
+	Nameless bool   `json:"nameless"`
 }
 
 // GetTokenFlowReq ...
