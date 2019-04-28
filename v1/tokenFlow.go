@@ -3,6 +3,7 @@ package v1
 import (
 	"fmt"
 	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/launchain/api"
@@ -94,6 +95,7 @@ func (t *TokenFlow) CreteTokenFlow(req *CreateTokenFlowRequest) (map[string]inte
 	data.Add("rule", req.Rule)
 	data.Add("device", req.Device)
 	data.Add("remark", req.Remark)
+	data.Add("nameless", strconv.FormatBool(req.Nameless))
 	out := make(map[string]interface{})
 	return out, api.PostForm(uri, data, &out)
 }
