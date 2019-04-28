@@ -44,6 +44,7 @@ type TokenFlowSchema struct {
 	Rule      string    `json:"rule"`
 	Device    string    `json:"device"`
 	Remark    string    `json:"remark"`
+	Nameless  bool      `json:"nameless"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
