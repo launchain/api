@@ -38,7 +38,6 @@ func (v *WeixinPayment) Prepay(req *WeixinPaymentReq) (map[string]interface{}, e
 	data["notify_url"] = []string{req.NotifyUrl}
 	data["trade_type"] = []string{req.TradeType}
 	data["open_id"] = []string{req.OpenId}
-	fmt.Println("xx", req.GoodsDesc, req.Platform)
 	url := v.uri + "/v1/weixin/payment/prepay"
 	out := make(map[string]interface{})
 	err := api.PostForm(url, data, &out)
