@@ -1,9 +1,8 @@
 package v1
 
 import (
-	"net/url"
 	"github.com/launchain/api"
-	"fmt"
+	"net/url"
 )
 
 // Violation ...
