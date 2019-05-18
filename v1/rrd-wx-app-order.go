@@ -10,11 +10,11 @@ type RRDWxAppOrder struct {
 	uri string
 }
 
-// GetPermissionByManualIDResponse ...
-type GetPermissionByManualIDResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
-	Data    bool   `json:"data"`
+// GetPermissionByUserIDResponse ...
+type GetPermissionByUserIDResponse struct {
+	Code    string          `json:"code"`
+	Message string          `json:"message"`
+	Data    map[string]bool `json:"data"`
 }
 
 // NewRRDWxAppOrder ...
@@ -25,9 +25,9 @@ func NewRRDWxAppOrder(c *api.Config) *RRDWxAppOrder {
 }
 
 //GetPermissionByManualID ...
-func (o *RRDWxAppOrder) GetPermissionByManualID(manualid, userid string) (*GetPermissionByManualIDResponse, error) {
-	out := &GetPermissionByManualIDResponse{}
-	url := fmt.Sprintf("%s/v1/rrd-wx-app/order/permission/%s/%s", o.uri, manualid, userid)
+func (o *RRDWxAppOrder) GetPermissionByUserID(userid string) (*GetPermissionByUserIDResponse, error) {
+	out := &GetPermissionByUserIDResponse{}
+	url := fmt.Sprintf("%s/v1/rrd-wx-app/order/permission/%s", o.uri, userid)
 	err := api.Get(url, out)
 	if err != nil {
 		return nil, err
