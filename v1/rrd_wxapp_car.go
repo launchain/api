@@ -28,6 +28,8 @@ type ManualInfo struct {
 	FirstMenu string    `json:"first_menu"`
 	FirstPage string    `json:"first_page"`
 	TotalPage int       `json:"total_page"`
+	UserID    string    `json:"user_id"`
+	UserName  string    `json:"user_name"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
