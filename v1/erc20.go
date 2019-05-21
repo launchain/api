@@ -2,8 +2,9 @@ package v1
 
 import (
 	"fmt"
-	"github.com/launchain/api"
 	"net/url"
+
+	"github.com/launchain/api"
 )
 
 // ERC20 ...
@@ -34,6 +35,15 @@ type ERC20Response struct {
 type ERC20PayRequest struct {
 	FromAddress  string `json:"from_address"`
 	ToAddress    string `json:"to_address"`
+	FromPhrase   string `json:"from_phrase"`
+	TokenID      string `json:"token_id"`
+	Value        string `json:"value"`
+	FromKeystore string `json:"from_keystore"`
+}
+
+type ERC20DeductRequest struct {
+	APIKey       string `json:"api_key"`
+	FromAddress  string `json:"from_address"`
 	FromPhrase   string `json:"from_phrase"`
 	TokenID      string `json:"token_id"`
 	Value        string `json:"value"`
@@ -79,9 +89,9 @@ func (u *ERC20) FindOne(tokenID string) (*ERC20Response, error) {
 	return out, err
 }
 
-//Pay  ...
+// Pay  ...
 func (u *ERC20) Pay(req *ERC20PayRequest) (map[string]interface{}, error) {
-	apiurl := u.uri + "/v1/token/payment"
+	apiURL := u.uri + "/v1/token/payment"
 	out := make(map[string]interface{})
 	data := make(url.Values)
 	data.Add("from_address", req.FromAddress)
@@ -90,7 +100,23 @@ func (u *ERC20) Pay(req *ERC20PayRequest) (map[string]interface{}, error) {
 	data.Add("value", req.Value)
 	data.Add("from_keystore", req.FromKeystore)
 	data.Add("from_phrase", req.FromPhrase)
-	err := api.PostForm(apiurl, data, &out)
+	err := api.PostForm(apiURL, data, &out)
+
+	return out, err
+}
+
+// Deduct  ...
+func (u *ERC20) Deduct(req *ERC20DeductRequest) (map[string]interface{}, error) {
+	apiURL := u.uri + "/v1/token/deduction"
+	out := make(map[string]interface{})
+	data := make(url.Values)
+	data.Add("from_address", req.FromAddress)
+	data.Add("token_id", req.TokenID)
+	data.Add("api_key", req.APIKey)
+	data.Add("value", req.Value)
+	data.Add("from_keystore", req.FromKeystore)
+	data.Add("from_phrase", req.FromPhrase)
+	err := api.PostForm(apiURL, data, &out)
 
 	return out, err
 }
