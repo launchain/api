@@ -134,6 +134,12 @@ type CheckUserResponse struct {
 	IsSetPassword  bool   `json:"is_set_password"`
 }
 
+// PayPassRequest ...
+type PayPassRequest struct {
+	UserID   string `json:"user_id"`
+	Password string `json:"password"`
+}
+
 // Find ...
 func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 	//	url := u.uri + "/v1/users?"
@@ -321,7 +327,7 @@ func (u *User) CheckUser(email, phone, userID string) (*CheckUserResponse, error
 	// 三者传其一
 	url := u.uri + fmt.Sprintf("/v1/users/check?email=%s&phone=%s&user_id=%s", email, phone, userID)
 	out := &CheckUserResponse{}
-	err := api.Get(url, out);
+	err := api.Get(url, out)
 	if err != nil {
 		return nil, err
 	}
@@ -378,4 +384,34 @@ func (u *User) FindAllUsersByAddress(req *FindUserByAddressRequest) (*UserFindRe
 	}
 
 	return out, nil
+}
+
+// CreatePayPassword ...
+func (u *User) CreatePayPassword(req *PayPassRequest) error {
+	var out interface{}
+	data := make(url.Values)
+	data.Add("user_id", req.UserID)
+	data.Add("password", req.Password)
+	err := api.PostForm(u.uri+"/v1/users/paypassword", data, out)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// CheckPayPassword ...
+func (u *User) CheckPayPassword(req *PayPassRequest) (bool, error) {
+	out := make(map[string]bool)
+	url := u.uri + fmt.Sprintf("/v1/user/%s/paypassword/%s", req.UserID, req.Password)
+	err := api.Get(url, out)
+	if err != nil {
+		return false, err
+	}
+
+	if !out["result"] {
+		return false, nil
+	}
+
+	return true, nil
 }
