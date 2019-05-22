@@ -35,8 +35,8 @@ func NewRRDWxAppPayment(c *api.Config) *RRDWxAppPayment {
 	return &RRDWxAppPayment{uri: uri}
 }
 
-// RRDwxAppPrepay ...
-func (v *WeixinPayment) RRDwxAppPrepay(req *WeixinPaymentReq) (map[string]interface{}, error) {
+// RRDWxAppPrepay ...
+func (v *RRDWxAppPayment) RRDWxAppPrepay(req *RRDWxAppPaymentReq) (map[string]interface{}, error) {
 	data := make(url.Values)
 	data["order_id"] = []string{req.OrderId}
 	data["platform"] = []string{req.Platform}
@@ -56,7 +56,7 @@ func (v *WeixinPayment) RRDwxAppPrepay(req *WeixinPaymentReq) (map[string]interf
 }
 
 //RRDWxAppWithdraw ...
-func (v *WeixinPayment) RRDWxAppWithdraw(req *WeixinWithdrawReq) (*Base, error) {
+func (v *RRDWxAppPayment) RRDWxAppWithdraw(req *RRDWxAppWithdrawReq) (*Base, error) {
 	data := make(url.Values)
 	data["openid"] = []string{req.Openid}
 	data["amount"] = []string{fmt.Sprintf("%d", req.Amount)}
