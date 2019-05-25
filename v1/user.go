@@ -403,8 +403,8 @@ func (u *User) CreatePayPassword(req *PayPassRequest) error {
 // FindPayPassword ...
 func (u *User) FindPayPassword(req *PayPassRequest) (string, error) {
 	out := make(map[string]string)
-	url := u.uri + fmt.Sprintf("/v1/user/%s/paypassword", req.UserID)
-	err := api.Get(url, out)
+	url := u.uri + fmt.Sprintf("/v1/users/%s/paypassword", req.UserID)
+	err := api.Get(url, &out)
 	if err != nil {
 		return "", err
 	}
@@ -415,8 +415,8 @@ func (u *User) FindPayPassword(req *PayPassRequest) (string, error) {
 // CheckPayPassword ...
 func (u *User) CheckPayPassword(req *PayPassRequest) (bool, error) {
 	out := make(map[string]bool)
-	url := u.uri + fmt.Sprintf("/v1/user/%s/paypassword/%s", req.UserID, req.Password)
-	err := api.Get(url, out)
+	url := u.uri + fmt.Sprintf("/v1/users/%s/paypassword/%s", req.UserID, req.Password)
+	err := api.Get(url, &out)
 	if err != nil {
 		return false, err
 	}
