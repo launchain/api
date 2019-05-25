@@ -400,6 +400,18 @@ func (u *User) CreatePayPassword(req *PayPassRequest) error {
 	return nil
 }
 
+// FindPayPassword ...
+func (u *User) FindPayPassword(req *PayPassRequest) (string, error) {
+	out := make(map[string]string)
+	url := u.uri + fmt.Sprintf("/v1/user/%s/paypassword", req.UserID)
+	err := api.Get(url, out)
+	if err != nil {
+		return "", err
+	}
+
+	return out["password"], nil
+}
+
 // CheckPayPassword ...
 func (u *User) CheckPayPassword(req *PayPassRequest) (bool, error) {
 	out := make(map[string]bool)
