@@ -59,7 +59,7 @@ func (s *Session) SignIn(phone, password, deviceID string, platform int) (map[st
 	return out, nil
 }
 
-//SignWithPhoneInGolo ...
+//SignWithPhone ...
 func (s *Session) SignWithPhone(req *SignWithPhoneReq) (*SessionResponse, error) {
 	data := make(url.Values)
 	data["phone"] = []string{req.Phone}
@@ -89,6 +89,24 @@ func (s *Session) SignInWithEmail(email, password, deviceID string, platform int
 	url := s.uri + "/v1/sessions/email"
 	out := make(map[string]interface{})
 	err := api.PostForm(url, data, &out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
+
+//SignWithPhoneInternal ...
+func (s *Session) SignWithPhoneInternal(req *SignWithPhoneReq) (*SessionResponse, error) {
+	data := make(url.Values)
+	data["phone"] = []string{req.Phone}
+	data["type"] = []string{fmt.Sprintf("%d", req.Type)}
+	data["device_id"] = []string{req.DeviceID}
+	data["platform"] = []string{fmt.Sprintf("%d", req.Platform)}
+
+	url := s.uri + "/v1/sessions/phone/internal"
+	out := &SessionResponse{}
+	err := api.PostForm(url, data, out)
 	if err != nil {
 		return nil, err
 	}
