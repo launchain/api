@@ -41,7 +41,7 @@ type DecryptDataRequest struct {
 //DecryptDataResponse ...
 type DecryptDataResponse struct {
 	Base
-	Data interface{} `json:"data"`
+	Data string `json:"data"`
 }
 
 // NewRRDWxAppAuth ...
@@ -61,15 +61,14 @@ func (a *RRDWxAppAuth) GetSessionKeyByCode(req *GetSessionKeyRequest) (*GetSessi
 }
 
 //DecryptData ...
-func (a *RRDWxAppAuth) DecryptData(req *DecryptDataRequest) (*DecryptDataResponse,error) {
+func (a *RRDWxAppAuth) DecryptData(req *DecryptDataRequest) (*DecryptDataResponse, error) {
 	out := &DecryptDataResponse{}
 	uri := a.uri + "/v1/rrd-wx-app/auth/data/decryption"
 	data := make(url.Values)
 	data.Add("session_key", req.SessionKey)
 	data.Add("encrypted_data", req.EncryptedData)
 	data.Add("iv", req.Iv)
-	data.Add("raw_data",req.RawData)
+	data.Add("raw_data", req.RawData)
 	data.Add("sign", req.Sign)
 	return out, api.PostForm(uri, data, &out)
 }
-
