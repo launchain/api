@@ -41,7 +41,7 @@ type ConsulConfig struct {
 
 	RRDWxAppID string `consul:"service/weixin-app/rrd/app-id"`
 
-	RRDWxAppPaymentNotifyURL string `consul:"//RRDWxAppPaymentNotifyURL"`
+	RRDWxAppPaymentNotifyURL string `consul:"service/weixin-app/rrd/payment/notifyurl"`
 
 	RRDWxAppPaymentPort string `consul:"service/weixin-app/rrd/payment/port"`
 

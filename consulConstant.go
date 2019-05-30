@@ -63,7 +63,7 @@ const (
 	RRDWxAppPaymentPort
 	// RRDWxAppWithdrawUrl service/weixin-app/rrd/withdraw-url
 	RRDWxAppWithdrawUrl
-	//RRDWxAppPaymentNotifyURL service/weixin-app/rrd/payment/notifyurl
+	// RRDWxAppPaymentNotifyURL service/weixin-app/rrd/payment/notifyurl
 	RRDWxAppPaymentNotifyURL
 	// RRDWxAppRefundNotifyURL service/weixin-app/rrd/payment/refund-notify
 	RRDWxAppRefundNotifyURL
