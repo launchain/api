@@ -55,12 +55,16 @@ const (
 	RRDMchID
 	// RRDWxPaymentNotifyURL service/weixin/rrd/weixin-payment/notifyurl
 	RRDWxPaymentNotifyURL
-	// RRdwxRefundNotifyURL service/weixin/rrd/weixin-payment/refund-notify
-	RRdwxRefundNotifyURL
+	// RRDWxRefundNotifyURL service/weixin/rrd/weixin-payment/refund-notify
+	RRDWxRefundNotifyURL
 	// RRDWxAppAuthPort  service/weixin-app/rrd/auth-port
 	RRDWxAppAuthPort
-	// RRDWxAppPaymentPort service/weixin-app/rrd/payment-port
+	// RRDWxAppPaymentPort service/weixin-app/rrd/payment/port
 	RRDWxAppPaymentPort
 	// RRDWxAppWithdrawUrl service/weixin-app/rrd/withdraw-url
 	RRDWxAppWithdrawUrl
+	//RRDWxAppPaymentNotifyURL service/weixin-app/rrd/payment/notifyurl
+	RRDWxAppPaymentNotifyURL
+	// RRDWxAppRefundNotifyURL service/weixin-app/rrd/payment/refund-notify
+	RRDWxAppRefundNotifyURL
 )
