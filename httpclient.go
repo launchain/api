@@ -1,6 +1,7 @@
 package api
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -8,7 +9,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"bytes"
+
+	"github.com/opentracing/opentracing-go"
 )
 
 // MyError ...
@@ -96,7 +98,6 @@ func Delete(url string) error {
 	return fmt.Errorf("未知错误[%d]", resp.StatusCode)
 }
 
-
 // PostJson ...
 func PostJson(url, params string, out interface{}) error {
 	client := http.Client{}
@@ -117,7 +118,6 @@ func PostJson(url, params string, out interface{}) error {
 
 	return parseResp(resp, out)
 }
-
 
 func parseResp(resp *http.Response, out interface{}) error {
 	if resp == nil {
@@ -158,4 +158,122 @@ func parseResp(resp *http.Response, out interface{}) error {
 	default:
 		return fmt.Errorf("不支持的状态码[%d]", resp.StatusCode)
 	}
+}
+
+// GetAndTrace
+func GetAndTrace(traceCtx opentracing.SpanContext, url string, out interface{}) error {
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("tracer", GetTraceInfo(traceCtx))
+	cli := new(http.Client)
+	resp, err := cli.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+	resp.Request.Close = true
+	return parseResp(resp, out)
+}
+
+// PostFormAndTrace ...
+func PostFormAndTrace(traceCtx opentracing.SpanContext, url string, data url.Values, out interface{}) error {
+	req, err := http.NewRequest(http.MethodPost, url, strings.NewReader(data.Encode()))
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("tracer", GetTraceInfo(traceCtx))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	cli := new(http.Client)
+	resp, err := cli.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+	resp.Request.Close = true
+
+	return parseResp(resp, out)
+}
+
+// PatchAndTrace ...
+func PatchAndTrace(traceCtx opentracing.SpanContext, url string, data url.Values, out interface{}) error {
+	req, err := http.NewRequest("PATCH", url, strings.NewReader(data.Encode()))
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("tracer", GetTraceInfo(traceCtx))
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	c := &http.Client{}
+	resp, err := c.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+		resp.Request.Close = true
+	}
+
+	return parseResp(resp, out)
+}
+
+// DeleteAndTrace ...
+func DeleteAndTrace(traceCtx opentracing.SpanContext, url string) error {
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("tracer", GetTraceInfo(traceCtx))
+
+	c := &http.Client{}
+	resp, err := c.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+
+	resp.Request.Close = true
+
+	if resp.StatusCode == 204 {
+		return nil
+	}
+
+	return fmt.Errorf("未知错误[%d]", resp.StatusCode)
+}
+
+// PostJsonAndTrace ...
+func PostJsonAndTrace(traceCtx opentracing.SpanContext, url, params string, out interface{}) error {
+	client := http.Client{}
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(params)))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("tracer", GetTraceInfo(traceCtx))
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+	resp.Request.Close = true
+
+	return parseResp(resp, out)
 }
