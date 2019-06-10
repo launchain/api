@@ -7,8 +7,8 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/launchain/api"
 	"github.com/opentracing/opentracing-go"
-	"gitlab.com/launch-appraisal/api"
 )
 
 // User ...
