@@ -2,6 +2,8 @@ package v1
 
 import (
 	"fmt"
+	"net/url"
+
 	"github.com/launchain/api"
 )
 
@@ -11,6 +13,7 @@ type WeixinAuth struct {
 }
 
 type WxAuthGetUserInfoByCodeReq struct {
+	TracingBase
 	Code string
 }
 
@@ -34,6 +37,18 @@ type WeixinAuthUserInfoRes struct {
 	UnionID    string   `json:"union_id"`
 }
 
+type WxAuthSendMsgReq struct {
+	TracingBase
+	OpenId string
+	Text   string
+}
+
+//WxAuthSendMsgRes ...
+type WxAuthSendMsgRes struct {
+	Code    string
+	Message string
+}
+
 // NewWeixinAuth ...
 func NewWeixinAuth(c *api.Config) *WeixinAuth {
 	c.Check()
@@ -41,24 +56,61 @@ func NewWeixinAuth(c *api.Config) *WeixinAuth {
 	return &WeixinAuth{uri: uri}
 }
 
-//GetUserInfoByCode ...
-func (a *WeixinAuth) GetUserInfoByCode(req WxAuthGetUserInfoByCodeReq) (WxAuthGetUserInfoByCodeRes,error) {
+// Deprecated: use TracingGetUserInfoByCode
+func (a *WeixinAuth) GetUserInfoByCode(req WxAuthGetUserInfoByCodeReq) (WxAuthGetUserInfoByCodeRes, error) {
 	out := WxAuthGetUserInfoByCodeRes{}
-	url := fmt.Sprintf("%s/v1/weixin/auth?code=%s", a.uri, req.Code)
-	err := api.Get(url, &out)
+	dstUrl := fmt.Sprintf("%s/v1/weixin/auth?code=%s", a.uri, req.Code)
+	err := api.Get(dstUrl, &out)
 	if err != nil {
 		return WxAuthGetUserInfoByCodeRes{}, err
 	}
 	return out, nil
 }
 
-//GetRRDUserInfoByCode ...
-func (a *WeixinAuth) GetRRDUserInfoByCode(req WxAuthGetUserInfoByCodeReq) (WxAuthGetUserInfoByCodeRes,error) {
+// Deprecated: use TracingGetRRDUserInfoByCode
+func (a *WeixinAuth) GetRRDUserInfoByCode(req WxAuthGetUserInfoByCodeReq) (WxAuthGetUserInfoByCodeRes, error) {
 	out := WxAuthGetUserInfoByCodeRes{}
-	url := fmt.Sprintf("%s/v1/weixin/rrd/auth?code=%s", a.uri, req.Code)
-	err := api.Get(url, &out)
+	dstUrl := fmt.Sprintf("%s/v1/weixin/rrd/auth?code=%s", a.uri, req.Code)
+	err := api.Get(dstUrl, &out)
 	if err != nil {
 		return WxAuthGetUserInfoByCodeRes{}, err
+	}
+	return out, nil
+}
+
+// TracingGetUserInfoByCode ...
+func (a *WeixinAuth) TracingGetUserInfoByCode(req WxAuthGetUserInfoByCodeReq) (WxAuthGetUserInfoByCodeRes, error) {
+	out := WxAuthGetUserInfoByCodeRes{}
+	dstUrl := fmt.Sprintf("%s/v1/weixin/auth?code=%s", a.uri, req.Code)
+	err := api.GetAndTrace(req.SpanContext, dstUrl, &out)
+	if err != nil {
+		return WxAuthGetUserInfoByCodeRes{}, err
+	}
+	return out, nil
+}
+
+// TracingGetRRDUserInfoByCode ...
+func (a *WeixinAuth) TracingGetRRDUserInfoByCode(req WxAuthGetUserInfoByCodeReq) (WxAuthGetUserInfoByCodeRes, error) {
+	out := WxAuthGetUserInfoByCodeRes{}
+	dstUrl := fmt.Sprintf("%s/v1/weixin/rrd/auth?code=%s", a.uri, req.Code)
+	err := api.GetAndTrace(req.SpanContext, dstUrl, &out)
+	if err != nil {
+		return WxAuthGetUserInfoByCodeRes{}, err
+	}
+	return out, nil
+}
+
+// TracingSendMsgByOpenIdAndText ...
+func (a *WeixinAuth) TracingSendMsgByOpenIdAndText(req WxAuthSendMsgReq) (WxAuthSendMsgRes, error) {
+	out := WxAuthSendMsgRes{}
+
+	data := make(url.Values)
+	data.Set("open_id", req.OpenId)
+	data.Set("text", req.Text)
+	dstUrl := fmt.Sprintf("%s/v1/weixin/rrd/auth/send-msg", a.uri)
+	err := api.PostFormAndTrace(req.SpanContext, dstUrl, data, &out)
+	if err != nil {
+		return WxAuthSendMsgRes{}, err
 	}
 	return out, nil
 }

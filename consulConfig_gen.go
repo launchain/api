@@ -51,6 +51,8 @@ type ConsulConfig struct {
 
 	RRDWxAppWithdrawUrl string `consul:"service/weixin-app/rrd/withdraw-url"`
 
+	RRDWxAuthPort string `consul:"service/weixin/rrd/weixin-auth/port"`
+
 	RRDWxGetSessionKeyUrl string `consul:"service/weixin-app/rrd/get-session-key-url"`
 
 	RRDWxPaymentNotifyURL string `consul:"service/weixin/rrd/weixin-payment/notifyurl"`
