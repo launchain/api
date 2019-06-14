@@ -37,7 +37,7 @@ type ConsulConfig struct {
 
 	RRDMchID string `consul:"service/weixin/rrd/mch-id"`
 
-	RRDWxAppAuthPort string `consul:"service/weixin-app/rrd/auth-port"`
+	RRDWxAppAuthPort string `consul:"service/weixin-app/rrd/auth/port"`
 
 	RRDWxAppID string `consul:"service/weixin-app/rrd/app-id"`
 
@@ -53,7 +53,7 @@ type ConsulConfig struct {
 
 	RRDWxAuthPort string `consul:"service/weixin/rrd/weixin-auth/port"`
 
-	RRDWxGetSessionKeyUrl string `consul:"service/weixin-app/rrd/get-session-key-url"`
+	RRDWxGetSessionKeyUrl string `consul:"service/weixin-app/rrd/auth/get-session-key-url"`
 
 	RRDWxPaymentNotifyURL string `consul:"service/weixin/rrd/weixin-payment/notifyurl"`
 

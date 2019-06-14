@@ -43,7 +43,7 @@ const (
 	RRDWxAppID
 	// RRDWxAppSecret service/weixin-app/rrd/app-secret
 	RRDWxAppSecret
-	// RRDWxGetSessionKeyUrl service/weixin-app/rrd/get-session-key-url
+	// RRDWxGetSessionKeyUrl service/weixin-app/rrd/auth/get-session-key-url
 	RRDWxGetSessionKeyUrl
 	// MongoDbWeixinPaymentURI db/mongodb/weixin-payment
 	MongoDbWeixinPaymentURI
@@ -57,7 +57,7 @@ const (
 	RRDWxPaymentNotifyURL
 	// RRDWxRefundNotifyURL service/weixin/rrd/weixin-payment/refund-notify
 	RRDWxRefundNotifyURL
-	// RRDWxAppAuthPort  service/weixin-app/rrd/auth-port
+	// RRDWxAppAuthPort  service/weixin-app/rrd/auth/port
 	RRDWxAppAuthPort
 	// RRDWxAppPaymentPort service/weixin-app/rrd/payment/port
 	RRDWxAppPaymentPort
