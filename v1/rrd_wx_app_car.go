@@ -11,6 +11,12 @@ type WxAppCar struct {
 	uri string
 }
 
+//GetManualRequest ...
+type GetManualRequest struct {
+	TracingBase
+	ID string
+}
+
 // GetManualResponse ...
 type GetManualResponse struct {
 	Code    string     `json:"code"`
@@ -42,10 +48,10 @@ func NewWxAppCar(c *api.Config) *WxAppCar {
 }
 
 //GetManualByID ...
-func (u *WxAppCar) GetManualByID(id string) (*GetManualResponse, error) {
+func (u *WxAppCar) GetManualByID(request *GetManualRequest) (*GetManualResponse, error) {
 	out := &GetManualResponse{}
-	url := fmt.Sprintf("%s/v1/rrd-wx-app/car/info/%s", u.uri, id)
-	err := api.Get(url, out)
+	url := fmt.Sprintf("%s/v1/rrd-wx-app/car/info/%s", u.uri, request.ID)
+	err := api.GetAndTrace(request.SpanContext, url, out)
 	if err != nil {
 		return nil, err
 	}
