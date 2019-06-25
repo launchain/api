@@ -75,6 +75,8 @@ type ConsulConfig struct {
 
 	RRPointsSaasWxPayNoticeAddr string `consul:"service/rrpoints-saas/wx-pay/notice-addr"`
 
+	RRPointsSaasWxPayNoticeIsProduction string `consul:"service/rrpoints-saas/wx-pay/is-production"`
+
 	RRPointsSaasWxPayPort string `consul:"service/rrpoints-saas/wx-pay/port"`
 
 	RedisPassword string `consul:"redis/cache/password"`

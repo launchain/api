@@ -87,4 +87,6 @@ const (
 	RRPointsSaasWxPayMchId
 	// RRPointsSaasWxPayNoticeAddr service/rrpoints-saas/wx-pay/notice-addr
 	RRPointsSaasWxPayNoticeAddr
+	// RRPointsSaasWxPayNoticeIsProduction service/rrpoints-saas/wx-pay/is-production
+	RRPointsSaasWxPayNoticeIsProduction
 )
