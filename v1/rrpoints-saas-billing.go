@@ -8,6 +8,21 @@ import (
 	"github.com/launchain/api"
 )
 
+type BillingState = int
+type BillingType = int
+
+const (
+	BillingStateInit BillingState = iota + 1
+	BillingStatePayFinish
+	BillingStateSendGoodsFinish
+	BillingStateClosed
+)
+
+const (
+	BillingTypeWxPay BillingType = iota + 1
+)
+
+// Billing ...
 type Billing struct {
 	ID        string    `gorm:"column:id" json:"id"`
 	CreatedAt time.Time `gorm:"column:created_at" json:"created_at"`
