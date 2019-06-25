@@ -59,6 +59,14 @@ type ConsulConfig struct {
 
 	RRDWxRefundNotifyURL string `consul:"service/weixin/rrd/weixin-payment/refund-notify"`
 
+	RRPointsSaasBillingMysqlDbName string `consul:"service/rrpoints-saas/billing/mysql/dbName"`
+
+	RRPointsSaasBillingMysqlPswd string `consul:"service/rrpoints-saas/billing/mysql/pswd"`
+
+	RRPointsSaasBillingMysqlUser string `consul:"service/rrpoints-saas/billing/mysql/user"`
+
+	RRPointsSaasBillingPort string `consul:"service/rrpoints-saas/billing/port"`
+
 	RedisPassword string `consul:"redis/cache/password"`
 
 	RedisURI string `consul:"redis/cache/host"`

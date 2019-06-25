@@ -69,4 +69,12 @@ const (
 	RRDWxAppRefundNotifyURL
 	// RRDWxAuthPort service/weixin/rrd/weixin-auth/port
 	RRDWxAuthPort
+	// RRPointsSaasBillingPort service/rrpoints-saas/billing/port
+	RRPointsSaasBillingPort
+	// RRPointsSaasBillingMysqlUser service/rrpoints-saas/billing/mysql/user
+	RRPointsSaasBillingMysqlUser
+	// RRPointsSaasBillingMysqlPswd service/rrpoints-saas/billing/mysql/pswd
+	RRPointsSaasBillingMysqlPswd
+	// RRPointsSaasBillingMysqlDbName service/rrpoints-saas/billing/mysql/dbName
+	RRPointsSaasBillingMysqlDbName
 )

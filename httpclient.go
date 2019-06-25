@@ -277,3 +277,26 @@ func PostJsonAndTrace(traceCtx opentracing.SpanContext, url, params string, out 
 
 	return parseResp(resp, out)
 }
+
+// PutJsonAndTrace ...
+func PutJsonAndTrace(traceCtx opentracing.SpanContext, url, params string, out interface{}) error {
+	client := http.Client{}
+	req, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer([]byte(params)))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("tracer", GetTraceInfo(traceCtx))
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+	resp.Request.Close = true
+
+	return parseResp(resp, out)
+}
