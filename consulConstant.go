@@ -77,4 +77,14 @@ const (
 	RRPointsSaasBillingMysqlPswd
 	// RRPointsSaasBillingMysqlDbName service/rrpoints-saas/billing/mysql/dbName
 	RRPointsSaasBillingMysqlDbName
+	// RRPointsSaasWxPayPort service/rrpoints-saas/wx-pay/port
+	RRPointsSaasWxPayPort
+	// RRPointsSaasWxPayApiKey service/rrpoints-saas/wx-pay/apikey
+	RRPointsSaasWxPayApiKey
+	// RRPointsSaasWxPayAppId service/rrpoints-saas/wx-pay/appid
+	RRPointsSaasWxPayAppId
+	// RRPointsSaasWxPayMchId service/rrpoints-saas/wx-pay/mchid
+	RRPointsSaasWxPayMchId
+	// RRPointsSaasWxPayNoticeAddr service/rrpoints-saas/wx-pay/notice-addr
+	RRPointsSaasWxPayNoticeAddr
 )

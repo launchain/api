@@ -67,6 +67,16 @@ type ConsulConfig struct {
 
 	RRPointsSaasBillingPort string `consul:"service/rrpoints-saas/billing/port"`
 
+	RRPointsSaasWxPayApiKey string `consul:"service/rrpoints-saas/wx-pay/apikey"`
+
+	RRPointsSaasWxPayAppId string `consul:"service/rrpoints-saas/wx-pay/appid"`
+
+	RRPointsSaasWxPayMchId string `consul:"service/rrpoints-saas/wx-pay/mchid"`
+
+	RRPointsSaasWxPayNoticeAddr string `consul:"service/rrpoints-saas/wx-pay/notice-addr"`
+
+	RRPointsSaasWxPayPort string `consul:"service/rrpoints-saas/wx-pay/port"`
+
 	RedisPassword string `consul:"redis/cache/password"`
 
 	RedisURI string `consul:"redis/cache/host"`
