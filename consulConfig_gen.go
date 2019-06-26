@@ -67,7 +67,7 @@ type ConsulConfig struct {
 
 	RRPointsSaasBillingPort string `consul:"service/rrpoints-saas/billing/port"`
 
-	RRPointsSaasMongoDB string `consul:"service/db/mongodb/rrpoints-saas"`
+	RRPointsSaasMongoDB string `consul:"db/mongodb/rrpoints-saas"`
 
 	RRPointsSaasWxPayApiKey string `consul:"service/rrpoints-saas/wx-pay/apikey"`
 
