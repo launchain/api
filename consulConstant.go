@@ -89,6 +89,6 @@ const (
 	RRPointsSaasWxPayNoticeAddr
 	// RRPointsSaasWxPayNoticeIsProduction service/rrpoints-saas/wx-pay/is-production
 	RRPointsSaasWxPayNoticeIsProduction
-	// RRPointsSaasMongoDB service/db/mongodb/rrpoints-saas
+	// RRPointsSaasMongoDB db/mongodb/rrpoints-saas
 	RRPointsSaasMongoDB
 )
