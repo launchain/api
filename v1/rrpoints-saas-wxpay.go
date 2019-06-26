@@ -33,9 +33,9 @@ type GetPrePayHeadRequest struct {
 
 // GetPrePayHeadResponse ...
 type GetPrePayHeadResponse struct {
-	Code    string         `json:"code"`
-	Message string         `json:"message"`
-	Data    []WxPrePayData `json:"data"`
+	Code    string       `json:"code"`
+	Message string       `json:"message"`
+	Data    WxPrePayData `json:"data"`
 }
 
 // GetOrderQueryRequest ...

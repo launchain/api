@@ -19,7 +19,10 @@ const (
 )
 
 const (
+	// BillingTypeWxPay 微信支付
 	BillingTypeWxPay BillingType = iota + 1
+	// BillingTypePurchase 购买服务包
+	BillingTypePurchase
 )
 
 // Billing ...
