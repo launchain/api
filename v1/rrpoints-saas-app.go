@@ -26,6 +26,7 @@ type AppWxNoticeRequest struct {
 }
 
 type AppWxNoticeResponse struct {
+	Base
 }
 
 // PostWxNotice ...
