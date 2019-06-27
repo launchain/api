@@ -47,6 +47,7 @@ type GetOrderQueryRequest struct {
 type GetOrderQueryResponse struct {
 	UId     string `json:"uid"`
 	TransId string `json:"trans_id"`
+	Paid    bool   `json:"paid"`
 }
 
 // NewRRPointsWxPay ...
