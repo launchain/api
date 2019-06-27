@@ -54,9 +54,7 @@ type GetAllBillingsRequest struct {
 
 // GetAllBillingsResponse ...
 type GetAllBillingsResponse struct {
-	Code    string    `json:"code"`
-	Message string    `json:"message"`
-	Data    []Billing `json:"data"`
+	Billings []Billing `json:"billings"`
 }
 
 // GetBillingRequest ...
@@ -67,9 +65,7 @@ type GetBillingRequest struct {
 
 // GetBillingResponse ...
 type GetBillingResponse struct {
-	Code    string  `json:"code"`
-	Message string  `json:"message"`
-	Data    Billing `json:"data"`
+	Billing
 }
 
 // AddBillingRequest ...
@@ -80,9 +76,7 @@ type AddBillingRequest struct {
 
 // AddBillingsResponse ...
 type AddBillingResponse struct {
-	Code    string  `json:"code"`
-	Message string  `json:"message"`
-	Data    Billing `json:"data"`
+	Billing
 }
 
 // UpdateBillingRequest ...
@@ -93,9 +87,7 @@ type UpdateBillingRequest struct {
 
 // UpdateBillingsResponse ...
 type UpdateBillingResponse struct {
-	Code    string  `json:"code"`
-	Message string  `json:"message"`
-	Data    Billing `json:"data"`
+	Billing
 }
 
 // DeleteBillingRequest ...

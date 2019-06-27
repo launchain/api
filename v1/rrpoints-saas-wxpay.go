@@ -33,9 +33,7 @@ type GetPrePayHeadRequest struct {
 
 // GetPrePayHeadResponse ...
 type GetPrePayHeadResponse struct {
-	Code    string       `json:"code"`
-	Message string       `json:"message"`
-	Data    WxPrePayData `json:"data"`
+	WxPrePayData
 }
 
 // GetOrderQueryRequest ...
@@ -47,8 +45,6 @@ type GetOrderQueryRequest struct {
 
 // GetOrderQueryResponse ...
 type GetOrderQueryResponse struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
 	UId     string `json:"uid"`
 	TransId string `json:"trans_id"`
 }
