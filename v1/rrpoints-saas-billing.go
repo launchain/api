@@ -59,14 +59,14 @@ type GetAllBillingsResponse struct {
 	Data    []Billing `json:"data"`
 }
 
-// GetAllBillingRequest ...
-type GetAllBillingRequest struct {
+// GetBillingRequest ...
+type GetBillingRequest struct {
 	TracingBase
 	Id string
 }
 
-// GetAllBillingsResponse ...
-type GetAllBillingResponse struct {
+// GetBillingResponse ...
+type GetBillingResponse struct {
 	Code    string  `json:"code"`
 	Message string  `json:"message"`
 	Data    Billing `json:"data"`
@@ -123,9 +123,9 @@ func (o *RRPointsBilling) GetAllBillings(request *GetAllBillingsRequest) (*GetAl
 	return &out, nil
 }
 
-// GetAllBilling ...
-func (o *RRPointsBilling) GetAllBilling(request *GetAllBillingRequest) (*GetAllBillingResponse, error) {
-	out := GetAllBillingResponse{}
+// GetBilling ...
+func (o *RRPointsBilling) GetBilling(request *GetBillingRequest) (*GetBillingResponse, error) {
+	out := GetBillingResponse{}
 	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/%v", o.uri, request.Id)
 	err := api.GetAndTrace(request.SpanContext, url, &out)
 	if err != nil {
