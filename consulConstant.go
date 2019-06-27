@@ -93,4 +93,6 @@ const (
 	RRPointsSaasWxPayNoticeIsProduction
 	// RRPointsSaasMongoDB db/mongodb/rrpoints-saas
 	RRPointsSaasMongoDB
+	// RRPointsSaasAppPort service/rrpoints-saas/app/port
+	RRPointsSaasAppPort
 )
