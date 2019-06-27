@@ -27,16 +27,19 @@ const (
 
 // Billing ...
 type Billing struct {
-	ID        string    `gorm:"column:id" json:"id"`
-	CreatedAt time.Time `gorm:"column:created_at" json:"created_at"`
-	UpdatedAt time.Time `gorm:"column:updated_at" json:"updated_at"`
-	State     int       `gorm:"column:state" json:"state"`
-	Type      int       `gorm:"column:type" json:"type"`
-	UserID    string    `gorm:"column:user_id" json:"user_id"`
-	StoreID   string    `gorm:"column:store_id" json:"store_id"`
-	Price     string    `gorm:"column:price" json:"price"`
-	SrcAddr   string    `gorm:"column:src_addr" json:"src_addr"`
-	DstAddr   string    `gorm:"column:dst_addr" json:"dst_addr"`
+	ID          string    `gorm:"column:id" json:"id"`
+	CreatedAt   time.Time `gorm:"column:created_at" json:"created_at"`
+	UpdatedAt   time.Time `gorm:"column:updated_at" json:"updated_at"`
+	State       int       `gorm:"column:state" json:"state"`
+	Type        int       `gorm:"column:type" json:"type"`
+	UserID      string    `gorm:"column:user_id" json:"user_id"`
+	StoreID     string    `gorm:"column:store_id" json:"store_id"`
+	Price       string    `gorm:"column:price" json:"price"`
+	TokenId     string    `gorm:"column:token_id" json:"token_id"`
+	TokenAmount string    `gorm:"column:token_amount" json:"token_amount"`
+	TokenSymbol string    `gorm:"column:token_symbol" json:"token_symbol"`
+	SrcAddr     string    `gorm:"column:src_addr" json:"src_addr"`
+	DstAddr     string    `gorm:"column:dst_addr" json:"dst_addr"`
 }
 
 // RRPointsBilling ...
