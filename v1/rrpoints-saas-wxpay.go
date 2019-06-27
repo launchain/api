@@ -79,7 +79,7 @@ func (o *RRPointsWxPay) GetOrderQuery(request *GetOrderQueryRequest) (*GetOrderQ
 	params := url2.Values{}
 	params.Set("uid", request.UId)
 	params.Set("trans_id", request.TransId)
-	url := fmt.Sprintf("%s/v1/rrpoints-saas/wxpay/prepayheader?%v", o.uri, params.Encode())
+	url := fmt.Sprintf("%s/v1/rrpoints-saas/wxpay/verify-pay-result?%v", o.uri, params.Encode())
 	err := api.GetAndTrace(request.SpanContext, url, &out)
 	if err != nil {
 		return nil, err
