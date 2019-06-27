@@ -21,6 +21,8 @@ const (
 	ERC20Port
 	// ERC20Payee service/erc20/payee
 	ERC20Payee
+	// ERC20APIKey service/erc20/apikey
+	ERC20APIKey
 	// MongoDbAppraisalEvaluation db/mongodb/appraisal-evaluation 鉴宝留言
 	MongoDbAppraisalEvaluation
 	// DuiBaAppKey service/duiba/app_key 兑吧appKey

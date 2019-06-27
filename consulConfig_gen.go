@@ -17,6 +17,8 @@ type ConsulConfig struct {
 
 	DuiBaSecretKey string `consul:"service/duiba/app_secret"`
 
+	ERC20APIKey string `consul:"service/erc20/apikey"`
+
 	ERC20Payee string `consul:"service/erc20/payee"`
 
 	ERC20Port string `consul:"service/erc20/port"`
