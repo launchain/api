@@ -12,11 +12,13 @@ type Session struct {
 }
 
 type SignWithPhoneReq struct {
-	Phone    string
-	Code     string
-	Type     int
-	DeviceID string
-	Platform int
+	Phone      string
+	Code       string
+	Type       int
+	DeviceID   string
+	Platform   int
+	AppName    string
+	DeviceName string
 }
 
 // SessionResponse ...
@@ -67,6 +69,8 @@ func (s *Session) SignWithPhone(req *SignWithPhoneReq) (*SessionResponse, error)
 	data["type"] = []string{fmt.Sprintf("%d", req.Type)}
 	data["device_id"] = []string{req.DeviceID}
 	data["platform"] = []string{fmt.Sprintf("%d", req.Platform)}
+	data["app_name"] = []string{req.AppName}
+	data["device_name"] = []string{req.DeviceName}
 
 	url := s.uri + "/v1/sessions/phone"
 	out := &SessionResponse{}
@@ -100,7 +104,8 @@ func (s *Session) SignInWithEmail(email, password, deviceID string, platform int
 func (s *Session) SignWithPhoneInternal(req *SignWithPhoneReq) (*SessionResponse, error) {
 	data := make(url.Values)
 	data["phone"] = []string{req.Phone}
-	data["type"] = []string{fmt.Sprintf("%d", req.Type)}
+	data["app_name"] = []string{req.AppName}
+	data["device_name"] = []string{req.DeviceName}
 	data["device_id"] = []string{req.DeviceID}
 	data["platform"] = []string{fmt.Sprintf("%d", req.Platform)}
 
