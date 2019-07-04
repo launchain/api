@@ -144,6 +144,13 @@ type UserIDs struct {
 	UserIDs []string `json:"user_ids"`
 }
 
+// PayPassRequest ...
+type PayPassRequest struct {
+	TracingBase
+	UserID   string `json:"user_id"`
+	Password string `json:"password"`
+}
+
 // Deprecated: use TracingFind
 func (u *User) Find(fr *UserFindRequest) (*UserFindResponse, error) {
 	//	url := u.uri + "/v1/users?"
@@ -400,6 +407,48 @@ func (u *User) FindAllUsersByUserIDs(userIDs UserIDs) (*UserFindResponse, error)
 	}
 
 	return out, nil
+}
+
+// Deprecated: use TracingCreatePayPassword
+func (u *User) CreatePayPassword(req *PayPassRequest) error {
+	var out interface{}
+	data := make(url.Values)
+	data.Add("user_id", req.UserID)
+	data.Add("password", req.Password)
+	err := api.PostForm(u.uri+"/v1/users/paypassword", data, out)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Deprecated: use TracingFindPayPassword
+func (u *User) FindPayPassword(req *PayPassRequest) (string, error) {
+	out := make(map[string]string)
+	url := u.uri + fmt.Sprintf("/v1/users/%s/paypassword", req.UserID)
+	err := api.Get(url, &out)
+	if err != nil {
+		return "", err
+	}
+
+	return out["password"], nil
+}
+
+// Deprecated: use TracingCheckPayPassword
+func (u *User) CheckPayPassword(req *PayPassRequest) (bool, error) {
+	out := make(map[string]bool)
+	url := u.uri + fmt.Sprintf("/v1/users/%s/paypassword/%s", req.UserID, req.Password)
+	err := api.Get(url, &out)
+	if err != nil {
+		return false, err
+	}
+
+	if !out["result"] {
+		return false, nil
+	}
+
+	return true, nil
 }
 
 // TracingFind ...
@@ -661,4 +710,46 @@ func (u *User) TracingFindAllUsersByUserIDs(spanCtx opentracing.SpanContext, use
 	}
 
 	return out, nil
+}
+
+// TracingCreatePayPassword ...
+func (u *User) TracingCreatePayPassword(req *PayPassRequest) error {
+	var out interface{}
+	data := make(url.Values)
+	data.Add("user_id", req.UserID)
+	data.Add("password", req.Password)
+	err := api.PostFormAndTrace(req.SpanContext, u.uri+"/v1/users/paypassword", data, out)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// TracingFindPayPassword ...
+func (u *User) TracingFindPayPassword(req *PayPassRequest) (string, error) {
+	out := make(map[string]string)
+	url := u.uri + fmt.Sprintf("/v1/users/%s/paypassword", req.UserID)
+	err := api.GetAndTrace(req.SpanContext, url, &out)
+	if err != nil {
+		return "", err
+	}
+
+	return out["password"], nil
+}
+
+// TracingCheckPayPassword ...
+func (u *User) TracingCheckPayPassword(req *PayPassRequest) (bool, error) {
+	out := make(map[string]bool)
+	url := u.uri + fmt.Sprintf("/v1/users/%s/paypassword/%s", req.UserID, req.Password)
+	err := api.GetAndTrace(req.SpanContext, url, &out)
+	if err != nil {
+		return false, err
+	}
+
+	if !out["result"] {
+		return false, nil
+	}
+
+	return true, nil
 }
