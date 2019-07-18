@@ -61,6 +61,8 @@ type ConsulConfig struct {
 
 	RRDWxRefundNotifyURL string `consul:"service/weixin/rrd/weixin-payment/refund-notify"`
 
+	RRPointsSaasAppBanners string `consul:"service/rrpoints-saas/app/banners"`
+
 	RRPointsSaasAppPort string `consul:"service/rrpoints-saas/app/port"`
 
 	RRPointsSaasBillingMysqlDbName string `consul:"service/rrpoints-saas/billing/mysql/dbName"`

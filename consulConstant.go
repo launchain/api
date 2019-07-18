@@ -95,4 +95,6 @@ const (
 	RRPointsSaasMongoDB
 	// RRPointsSaasAppPort service/rrpoints-saas/app/port
 	RRPointsSaasAppPort
+	// RRPointsSaasAppBanners service/rrpoints-saas/app/banners
+	RRPointsSaasAppBanners
 )
