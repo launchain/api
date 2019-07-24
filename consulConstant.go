@@ -35,9 +35,9 @@ const (
 	RedisURI
 	// RedisPassword redis/cache/password  redis密码
 	RedisPassword
-	// UserPort　service/user/port
+	// UserPort service/user/port
 	UserPort
-	// KeystorePort　service/user-keystore/port
+	// KeystorePort service/user-keystore/port
 	KeystorePort
 	// SessionPort service/session/port
 	SessionPort
@@ -97,4 +97,12 @@ const (
 	RRPointsSaasAppPort
 	// RRPointsSaasAppBanners service/rrpoints-saas/app/banners
 	RRPointsSaasAppBanners
+	// RRPointsSaasResourcesAccessKey service/rrpoints-saas/resources/access-key
+	RRPointsSaasResourcesAccessKey
+	// RRPointsSaasResourcesSecretKey service/rrpoints-saas/resources/secret-key
+	RRPointsSaasResourcesSecretKey
+	// RRPointsSaasResourcesBucket service/rrpoints-saas/resources/bucket
+	RRPointsSaasResourcesBucket
+	// RRPointsSaasResourcesDomain service/rrpoints-saas/resources/domain
+	RRPointsSaasResourcesDomain
 )

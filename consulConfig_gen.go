@@ -75,6 +75,14 @@ type ConsulConfig struct {
 
 	RRPointsSaasMongoDB string `consul:"db/mongodb/rrpoints-saas"`
 
+	RRPointsSaasResourcesAccessKey string `consul:"service/rrpoints-saas/resources/access-key"`
+
+	RRPointsSaasResourcesBucket string `consul:"service/rrpoints-saas/resources/bucket"`
+
+	RRPointsSaasResourcesDomain string `consul:"service/rrpoints-saas/resources/domain"`
+
+	RRPointsSaasResourcesSecretKey string `consul:"service/rrpoints-saas/resources/secret-key"`
+
 	RRPointsSaasWxPayApiKey string `consul:"service/rrpoints-saas/wx-pay/apikey"`
 
 	RRPointsSaasWxPayAppId string `consul:"service/rrpoints-saas/wx-pay/appid"`
