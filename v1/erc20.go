@@ -50,6 +50,63 @@ type ERC20DeductRequest struct {
 	FromKeystore string `json:"from_keystore"`
 }
 
+//AlliancePayRequest ...
+type AlliancePayRequest struct {
+	TracingBase
+	FromAddress  string
+	ToAddress    string
+	FromPhrase   string
+	TokenID      string
+	Value        string
+	FromKeystore string
+	Rule         string
+	Remark       string
+	Device       string
+}
+
+//AllianceGetBalanceRequest ...
+type AllianceGetBalanceRequest struct {
+	TracingBase
+	WalletAddress string
+}
+
+//PayTokenDetail ...
+type PayTokenDetail struct {
+	Token   string `json:"token"`
+	Value   string `json:"value"`
+	TxnHash string `json:"txnhash"`
+}
+
+//PayDetail ...
+type PayInfo struct {
+	Value  string           `json:"value"`
+	Detail []PayTokenDetail `json:"detail"`
+}
+
+//AlliancePayResponse ...
+type AlliancePayResponse struct {
+	Base
+	Data PayInfo `json:"data"`
+}
+
+//TokenBalance ...
+type TokenBalance struct {
+	Token string `json:"token"`
+	Value string `json:"value"`
+}
+
+//TotalBalance ...
+type TotalBalance struct {
+	Value  string         `json:"value"`
+	Detail []TokenBalance `json:"detail"`
+}
+
+//AllianceGetBalanceResponse ...
+type AllianceGetBalanceResponse struct {
+	Base
+	Data TotalBalance `json:"data"`
+}
+
 // NewERC20 ...
 func NewERC20(c *api.Config) *ERC20 {
 	c.Check()
@@ -139,6 +196,39 @@ func (u *ERC20) GetTokenByID(id string) (ERC20Response, error) {
 	err := api.Get(apiurl, &out)
 	if err != nil {
 		return out, err
+	}
+	return out, nil
+}
+
+//AllianceGetBalance ...
+func (u *ERC20) AllianceGetBalance(request *AllianceGetBalanceRequest) (*AllianceGetBalanceResponse, error) {
+	url := u.uri + "/v1/alliance/token/balance?address=" + request.WalletAddress
+	out := &AllianceGetBalanceResponse{}
+	err := api.GetAndTrace(request.SpanContext, url, out)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
+
+//AlliancePayment ...
+func (u *ERC20) AlliancePayment(request *AlliancePayRequest) (*AlliancePayResponse, error) {
+	data := make(url.Values)
+	data.Add("from_address", request.FromAddress)
+	data.Add("to_address", request.ToAddress)
+	data.Add("value", request.Value)
+	data.Add("from_phrase", request.FromPhrase)
+	data.Add("from_keystore", request.FromKeystore)
+	data.Add("rule", request.Rule)
+	data.Add("remark", request.Remark)
+	data.Add("device", request.Device)
+
+	out := &AlliancePayResponse{}
+	url := u.uri + "/v1/alliance/token/payment"
+	err := api.PostFormAndTrace(request.SpanContext, url, data, out)
+	if err != nil {
+		return nil, err
 	}
 	return out, nil
 }
