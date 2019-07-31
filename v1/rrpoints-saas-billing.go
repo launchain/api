@@ -40,6 +40,8 @@ type Billing struct {
 	TokenSymbol string    `gorm:"column:token_symbol" json:"token_symbol"`
 	SrcAddr     string    `gorm:"column:src_addr" json:"src_addr"`
 	DstAddr     string    `gorm:"column:dst_addr" json:"dst_addr"`
+	Remark      string    `gorm:"column:remark" json:"remark"`
+	Phone       string    `gorm:"column:phone" json:"phone"`
 }
 
 // RRPointsBilling ...
@@ -77,7 +79,7 @@ type AddBillingRequest struct {
 	Data Billing
 }
 
-// AddBillingsResponse ...
+// AddBillingResponse ...
 type AddBillingResponse struct {
 	Billing
 }
@@ -88,7 +90,7 @@ type UpdateBillingRequest struct {
 	Data Billing
 }
 
-// UpdateBillingsResponse ...
+// UpdateBillingResponse ...
 type UpdateBillingResponse struct {
 	Billing
 }
@@ -97,6 +99,20 @@ type UpdateBillingResponse struct {
 type DeleteBillingRequest struct {
 	TracingBase
 	Id string
+}
+
+// GetStoreBillingRequest ...
+type GetStoreBillingRequest struct {
+	TracingBase
+	storeID  string
+	Page     int
+	PageSize int
+	Order    string
+}
+
+// GetStoreBillingResponse ...
+type GetStoreBillingResponse struct {
+	Billing
 }
 
 // NewRRPointsBilling ...
@@ -109,7 +125,7 @@ func NewRRPointsBilling(c *api.Config) *RRPointsBilling {
 // GetAllBillings ...
 func (o *RRPointsBilling) GetAllBillings(request *GetAllBillingsRequest) (*GetAllBillingsResponse, error) {
 	out := GetAllBillingsResponse{}
-	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings?page=%v&pagesize=%v&order=%v",
+	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/billing?page=%v&pagesize=%v&order=%v",
 		o.uri, request.Page, request.PageSize, request.Order)
 	err := api.GetAndTrace(request.SpanContext, url, &out)
 	if err != nil {
@@ -121,7 +137,7 @@ func (o *RRPointsBilling) GetAllBillings(request *GetAllBillingsRequest) (*GetAl
 // GetBilling ...
 func (o *RRPointsBilling) GetBilling(request *GetBillingRequest) (*GetBillingResponse, error) {
 	out := GetBillingResponse{}
-	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/%v", o.uri, request.Id)
+	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/billing/%v", o.uri, request.Id)
 	err := api.GetAndTrace(request.SpanContext, url, &out)
 	if err != nil {
 		return nil, err
@@ -132,7 +148,7 @@ func (o *RRPointsBilling) GetBilling(request *GetBillingRequest) (*GetBillingRes
 // AddBilling ...
 func (o *RRPointsBilling) AddBilling(request *AddBillingRequest) (*AddBillingResponse, error) {
 	out := AddBillingResponse{}
-	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings", o.uri)
+	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/billing", o.uri)
 	params, _ := json.Marshal(request.Data)
 
 	err := api.PostJsonAndTrace(request.SpanContext, url, string(params), &out)
@@ -145,7 +161,7 @@ func (o *RRPointsBilling) AddBilling(request *AddBillingRequest) (*AddBillingRes
 // UpdateBilling ...
 func (o *RRPointsBilling) UpdateBilling(request *UpdateBillingRequest) (*UpdateBillingResponse, error) {
 	out := UpdateBillingResponse{}
-	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/%v", o.uri, request.Data.ID)
+	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/billing/%v", o.uri, request.Data.ID)
 	params, _ := json.Marshal(request.Data)
 
 	err := api.PutJsonAndTrace(request.SpanContext, url, string(params), &out)
@@ -157,11 +173,23 @@ func (o *RRPointsBilling) UpdateBilling(request *UpdateBillingRequest) (*UpdateB
 
 // DeleteBilling ...
 func (o *RRPointsBilling) DeleteBilling(request *DeleteBillingRequest) error {
-	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/%v", o.uri, request.Id)
+	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/billing/%v", o.uri, request.Id)
 
 	err := api.DeleteAndTrace(request.SpanContext, url)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+// GetStoreBilling ...
+func (o *RRPointsBilling) GetStoreBilling(request *GetStoreBillingRequest) (*GetStoreBillingResponse, error) {
+	out := GetStoreBillingResponse{}
+	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/store/%v?page=%v&pagesize=%v&order=%v",
+		o.uri, request.storeID, request.Page, request.PageSize, request.Order)
+	err := api.GetAndTrace(request.SpanContext, url, &out)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
 }
