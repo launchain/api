@@ -104,7 +104,7 @@ type DeleteBillingRequest struct {
 // GetStoreBillingRequest ...
 type GetStoreBillingRequest struct {
 	TracingBase
-	storeID  string
+	StoreID  string
 	Page     int
 	PageSize int
 	Order    string
