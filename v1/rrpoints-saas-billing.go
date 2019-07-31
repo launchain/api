@@ -112,7 +112,7 @@ type GetStoreBillingRequest struct {
 
 // GetStoreBillingResponse ...
 type GetStoreBillingResponse struct {
-	Billing
+	Billings []Billing `json:"billings"`
 }
 
 // NewRRPointsBilling ...
@@ -186,7 +186,7 @@ func (o *RRPointsBilling) DeleteBilling(request *DeleteBillingRequest) error {
 func (o *RRPointsBilling) GetStoreBilling(request *GetStoreBillingRequest) (*GetStoreBillingResponse, error) {
 	out := GetStoreBillingResponse{}
 	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/store/%v?page=%v&pagesize=%v&order=%v",
-		o.uri, request.storeID, request.Page, request.PageSize, request.Order)
+		o.uri, request.StoreID, request.Page, request.PageSize, request.Order)
 	err := api.GetAndTrace(request.SpanContext, url, &out)
 	if err != nil {
 		return nil, err
