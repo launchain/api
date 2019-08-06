@@ -105,6 +105,8 @@ type ConsulConfig struct {
 
 	TokenFlowPort string `consul:"service/token-flow/port"`
 
+	TokenPort string `consul:"service/token/port"`
+
 	UserPort string `consul:"service/user/port"`
 }
 

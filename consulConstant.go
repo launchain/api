@@ -105,4 +105,7 @@ const (
 	RRPointsSaasResourcesBucket
 	// RRPointsSaasResourcesDomain service/rrpoints-saas/resources/domain
 	RRPointsSaasResourcesDomain
+
+	// TokenPort service/token/port
+	TokenPort
 )
