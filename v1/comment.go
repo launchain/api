@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"github.com/launchain/api"
 	"fmt"
+	"github.com/launchain/api"
 )
 
 // Comment ...
@@ -15,7 +15,6 @@ func NewComment(config *api.Config) *Comment {
 	uri := config.URI()
 	return &Comment{uri: uri}
 }
-
 
 // CommentResponse ...
 type CommentResponse struct {

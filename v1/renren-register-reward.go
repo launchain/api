@@ -12,10 +12,10 @@ type RegisterReward struct {
 
 // CreateTokenFlowRequest ...
 type RegisterRewardRequest struct {
-	UserID  string `json:"user_id"`
-	OpenID     string `json:"openid"`
-	Credits    string `json:"credits"`
-	WallAddr  string `json:"wallet_addr"`
+	UserID   string `json:"user_id"`
+	OpenID   string `json:"openid"`
+	Credits  string `json:"credits"`
+	WallAddr string `json:"wallet_addr"`
 }
 
 func NewRegisterReward(c *api.Config) *RegisterReward {
