@@ -83,6 +83,8 @@ type ConsulConfig struct {
 
 	RRPointsSaasResourcesSecretKey string `consul:"service/rrpoints-saas/resources/secret-key"`
 
+	RRPointsSaasWxNoticePort string `consul:"service/rrpoints-saas/wx-notice/port"`
+
 	RRPointsSaasWxPayApiKey string `consul:"service/rrpoints-saas/wx-pay/apikey"`
 
 	RRPointsSaasWxPayAppId string `consul:"service/rrpoints-saas/wx-pay/appid"`

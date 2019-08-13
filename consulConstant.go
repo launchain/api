@@ -105,6 +105,8 @@ const (
 	RRPointsSaasResourcesBucket
 	// RRPointsSaasResourcesDomain service/rrpoints-saas/resources/domain
 	RRPointsSaasResourcesDomain
+	// RRPointsSaasWxNoticePort service/rrpoints-saas/wx-notice/port
+	RRPointsSaasWxNoticePort
 
 	// TokenPort service/token/port
 	TokenPort
