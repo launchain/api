@@ -121,6 +121,26 @@ type GetStoreBillingResponse struct {
 	Total    string    `json:"total"`
 }
 
+// GetUserBillingRequest ...
+type GetUserBillingRequest struct {
+	TracingBase
+	UserID   string
+	Page     int
+	PageSize int
+	Order    string
+	DateFrom string
+	DateTo   string
+}
+
+// GetUserBillingResponse ...
+type GetUserBillingResponse struct {
+	Billings []Billing `json:"billings"`
+	Page     int       `json:"page"`
+	PageSize int       `json:"page_size"`
+	Pages    int       `json:"pages"`
+	Total    string    `json:"total"`
+}
+
 // NewRRPointsBilling ...
 func NewRRPointsBilling(c *api.Config) *RRPointsBilling {
 	c.Check()
@@ -192,6 +212,18 @@ func (o *RRPointsBilling) DeleteBilling(request *DeleteBillingRequest) error {
 func (o *RRPointsBilling) GetStoreBilling(request *GetStoreBillingRequest) (*GetStoreBillingResponse, error) {
 	out := GetStoreBillingResponse{}
 	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/store/%v?page=%v&pagesize=%v&order=%v&date_from=%v&date_to=%v",
+		o.uri, request.StoreID, request.Page, request.PageSize, request.Order, request.DateFrom, request.DateTo)
+	err := api.GetAndTrace(request.SpanContext, url, &out)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+// GetUserBilling ...
+func (o *RRPointsBilling) GetUserBilling(request *GetUserBillingRequest) (*GetUserBillingResponse, error) {
+	out := GetUserBillingResponse{}
+	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/user/%v?page=%v&pagesize=%v&order=%v&date_from=%v&date_to=%v",
 		o.uri, request.StoreID, request.Page, request.PageSize, request.Order, request.DateFrom, request.DateTo)
 	err := api.GetAndTrace(request.SpanContext, url, &out)
 	if err != nil {
