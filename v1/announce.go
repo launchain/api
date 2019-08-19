@@ -18,10 +18,10 @@ func NewAnnounce(c *api.Config) *Announce {
 }
 
 // CheckCode ...
-func (t *Announce) CheckCode(code string) (map[string]string, error) {
+func (t *Announce) CheckCode(code string) (map[string]interface{}, error) {
 
 	url := t.uri + "/v1/weixin-mp/rrpoints-saas/checkcode?code=" + code
-	out := make(map[string]string)
+	out := make(map[string]interface{})
 	err := api.Get(url, &out)
 	if err != nil {
 		return nil, err
