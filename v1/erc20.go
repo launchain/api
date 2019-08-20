@@ -56,12 +56,12 @@ type AlliancePayRequest struct {
 	FromAddress  string
 	ToAddress    string
 	FromPhrase   string
-	TokenID      string
 	Value        string
 	FromKeystore string
 	Rule         string
 	Remark       string
 	Device       string
+	Nameless     string
 }
 
 //AllianceGetBalanceRequest ...
@@ -223,6 +223,7 @@ func (u *ERC20) AlliancePayment(request *AlliancePayRequest) (*AlliancePayRespon
 	data.Add("rule", request.Rule)
 	data.Add("remark", request.Remark)
 	data.Add("device", request.Device)
+	data.Add("nameless", request.Nameless)
 
 	out := &AlliancePayResponse{}
 	url := u.uri + "/v1/alliance/token/payment"
