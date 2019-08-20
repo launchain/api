@@ -224,7 +224,7 @@ func (o *RRPointsBilling) GetStoreBilling(request *GetStoreBillingRequest) (*Get
 func (o *RRPointsBilling) GetUserBilling(request *GetUserBillingRequest) (*GetUserBillingResponse, error) {
 	out := GetUserBillingResponse{}
 	url := fmt.Sprintf("%s/v1/rrpoints-saas/billings/user/%v?page=%v&pagesize=%v&order=%v&date_from=%v&date_to=%v",
-		o.uri, request.StoreID, request.Page, request.PageSize, request.Order, request.DateFrom, request.DateTo)
+		o.uri, request.UserID, request.Page, request.PageSize, request.Order, request.DateFrom, request.DateTo)
 	err := api.GetAndTrace(request.SpanContext, url, &out)
 	if err != nil {
 		return nil, err
