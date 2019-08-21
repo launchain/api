@@ -3,6 +3,7 @@ package v1
 import (
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/launchain/api"
 )
@@ -61,7 +62,7 @@ type AlliancePayRequest struct {
 	Rule         string
 	Remark       string
 	Device       string
-	Nameless     string
+	Nameless     bool
 }
 
 //AllianceGetBalanceRequest ...
@@ -223,7 +224,7 @@ func (u *ERC20) AlliancePayment(request *AlliancePayRequest) (*AlliancePayRespon
 	data.Add("rule", request.Rule)
 	data.Add("remark", request.Remark)
 	data.Add("device", request.Device)
-	data.Add("nameless", request.Nameless)
+	data.Add("nameless", strconv.FormatBool(request.Nameless))
 
 	out := &AlliancePayResponse{}
 	url := u.uri + "/v1/alliance/token/payment"
