@@ -3,6 +3,7 @@ package v1
 import (
 	"fmt"
 	"github.com/launchain/api"
+	"github.com/shopspring/decimal"
 	"time"
 )
 
@@ -26,18 +27,21 @@ type GetManualResponse struct {
 
 //ManualInfo ...
 type ManualInfo struct {
-	ID        string    `json:"id"`
-	Brand     string    `json:"brand"`
-	Series    string    `json:"series"`
-	Year      string    `json:"year"`
-	Type      int       `json:"type"`
-	FirstMenu string    `json:"first_menu"`
-	FirstPage string    `json:"first_page"`
-	TotalPage int       `json:"total_page"`
-	UserID    string    `json:"user_id"`
-	UserName  string    `json:"user_name"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID          string          `json:"id"`
+	Brand       string          `json:"brand"`
+	Series      string          `json:"series"`
+	Year        string          `json:"year"`
+	Type        int             `json:"type"`
+	FirstMenu   string          `json:"first_menu"`
+	FirstPage   string          `json:"first_page"`
+	TotalPage   int             `json:"total_page"`
+	UserID      string          `json:"user_id"`
+	Price       decimal.Decimal `json:"price"`
+	Source      int             `json:"source"`
+	CanUsePoint int             `json:"can_use_point"`
+	UserName    string          `json:"user_name"`
+	CreatedAt   time.Time       `json:"created_at"`
+	UpdatedAt   time.Time       `json:"updated_at"`
 }
 
 // NewWxAppCar ...
